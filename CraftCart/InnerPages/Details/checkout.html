@@ -1,104 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Item Detail</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #7c4f20;
-            margin: 0;
-            padding: 40px;
-            color: #fff1e6;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout</title>
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    /* background-color: rgb(251, 220, 155); */
+    background-color: #7c4f20;
+  }
 
-        .container {
-            display: flex;
-            flex-direction: row;
-            max-width: 1100px;
-            margin: auto;
-            gap: 40px;
-            align-items: flex-start;
-            /* background-color: #22160f; */
-        }
+  .checkout-container {
+    max-width: 500px;
+    margin: auto;
+    /* background-color: #7c4f20; */
+    background-color: rgb(251, 220, 155);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    text-align: center; /* Center-aligns all content inside */
+  }
 
-        .image-container {
-            flex: 1;
-            height: 100%;
-            /* background-color: #deb9a4; */
-        }
+  img {
+    max-width: 100%;
+    height: 250px;
+    border-radius: 10px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 20px auto; /* Center image and add spacing below */
+  }
 
-        .image-container img {
-            width: 80%;
-            height: 600px;
-            /* or any height you prefer */
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
+  h2 {
+    margin-top: 0;
+    font-size: 28px;
+    color: #2c2c2c;
+  }
 
+  .price {
+    color: #b12704;
+    font-size: 24px;
+    margin: 15px 0;
+    font-weight: 700;
+  }
 
-        .image-container img:hover {
-            transform: scale(1.03);
-            /* Zoom 10% */
-        }
+  p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+  }
 
-        .info {
-            flex: 1;
-        }
+  .btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+    font-weight: bolder;
+  }
 
-        .info h1 {
-            font-size: 30px;
-            margin-bottom: 10px;
-            color: white;
-        }
+  .btn:hover {
+    background-color: #218838;
+  }
+  .btn1{
+    background-color: #f4c95d ;
+    color: black;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+    font-weight: bolder;
+  }
+  .btn1:hover {
+    background-color: #e0b14a;
+  }
+</style>
 
-        .price {
-            font-size: 20px;
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .description {
-            font-size: 16px;
-            line-height: 1.8;
-            margin-bottom: 30px;
-            color: #ffffff;
-        }
-
-        button {
-            padding: 14px 28px;
-            font-size: 16px;
-            background-color: #f1e5c6;
-            color: #22160f;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        button:hover {
-            background-color: #f2be79;
-        }
-    </style>
 </head>
-
 <body>
 
-    <div class="container" id="detailContainer">
-        <!-- JS will inject content here -->
-    </div>
+<div class="checkout-container" id="checkoutDetails">
+  <!-- JS will load product here -->
+</div>
 
-    <script>
-        const productData = {
-
-            //HOME DECOR DETAILS
-            home1: {
+<script>
+    const productData = {
+        home1: {
                 title: "Abhedabhava:Krishna Playing Flute with Radha by His Side",
                 description: " Radha and Krishna even after being separated remain united in soul, spirit and in the consciousness of millions of followers.The love of Radha and Krishna is the blissful form of divine regality, an ocean of unlimited divine bliss. Krishna is referred as the “poornatam purushottam brahma” or the supreme personality of the god. Thus all the forms of god reside within Krishna, where all the forms are absolute and divinely one. This green stone carved sculpture in all its magnificence potrays the divine bonding of radha and krishna in Gokul.",
                 image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-greenstone-statue-radha-krishna-34_grande.jpeg?v=1487657372",
@@ -331,36 +326,35 @@
                 image: "https://www.artisanscrest.in/cdn/shop/products/acgptcstgp-83_grande.jpg?v=1487682284",
                 description: "Indian handloom creations are in great demand among fashion connoisseurs across the world for their bright and vibrant colours, their intricate embroidery and the handcrafted skill of the master weavers of rural India. This exquisite stole is a testimony to the skills and talent of the rural craftsmen who work magic with Tussar silk to create this masterpiece in cloth. The light and elegant stole is characterized by the vibrant orange, green and brown hues, perfectly complemented by the bright pink motifs along the borders of the garment. This stole has a pleasing visual appearance and is perfect to wear with a light coloured ethnic ensemble. The exquisite garment is made from light fabric, making it perfect to wear across all weather conditions and adds a touch of culture and artistic heritage to your wardrobe."
             },
-        };
+    };
+    const params = new URLSearchParams(window.location.search);
+    const itemId = params.get('itemId');
+    const item = productData[itemId];
 
-        const params = new URLSearchParams(window.location.search);
-        const itemId = params.get('itemId');
-        const item = productData[itemId];
+    const container = document.getElementById("checkoutDetails");
 
-        const container = document.getElementById("detailContainer");
+    if (item) {
+        container.innerHTML = `
+          <h2>Order Summary</h2>
+          <img src="${item.image}" alt="${item.title}" />
+          <h3>${item.title}</h3>
+          <div class="price">Rs. ${item.price.toLocaleString()}</div>
+          <p>${item.description.substring(0, 150)}...</p>
+          <button class="btn" onclick="proceedToPayment()">Proceed to Payment</button>
+        <button  onclick="goBack()" class="btn1">Back to Home</button>
 
-        if (item) {
-            container.innerHTML = `
-      <div class="image-container">
-        <img src="${item.image}" alt="${item.title}" />
-      </div>
-      <div class="info">
-        <h1>${item.title}</h1>
-        <div class="price">Rs. ${item.price.toLocaleString()}</div>
-        <div class="description">${item.description}</div>
-        <button onclick="buyNow()">BUY NOW</button>
-        <button onclick="alert('Added to cart!')">ADD TO CART</button>
-      </div>
-    `;
-        } else {
-            container.innerHTML = "<h2>Item not found.</h2>";
-        }
-        function buyNow() {
-    window.location.href = `checkout.html?itemId=${itemId}`;
-}
+        `;
+    } else {
+        container.innerHTML = "<h2>Product not found.</h2>";
+    }
 
-    </script>
+    function proceedToPayment() {
+        alert("Redirecting to payment gateway...");
+    }
+    function goBack() {
+      window.location.href = "../../task.html";  
+    }
+</script>
 
 </body>
-
 </html>
