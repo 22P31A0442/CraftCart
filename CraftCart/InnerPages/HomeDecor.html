@@ -2,251 +2,550 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home Decor Collection</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: #f1e5c6;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Decor Collection</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 30px;
+            background-color: #f1e5c6;
+        }
 
-    h1 {
-      text-align: center;
-      color: #7c4f20;
-      margin-bottom: 20px;
-    }
+        h1 {
+            text-align: center;
+            color: #7c4f20;
+            margin-bottom: 20px;
+        }
 
-    .controls {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
 
-    .search-sort {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+        .search-sort {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
 
-    input[type="text"],
-    select {
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
+        input[type="text"],
+        select {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
 
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 20px;
-    }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
 
-    .card {
-      background-color: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      transition: 0.3s ease;
-      cursor: pointer;
-    }
+        .card {
+            position: relative;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
 
-    .card:hover {
-      transform: translateY(-5px);
-    }
+        .card:hover {
+            transform: translateY(-5px);
+        }
 
-    .card img {
-      width: 100%;
-      height: 380px;
-      object-fit: cover;
-    }
+        .card img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            object-position: center;
+        }
 
-    .card-body {
-      padding: 15px;
-    }
+        .card-body {
+            padding: 15px;
+        }
 
-    .card-title {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 8px;
-      color: #333;
-    }
+        .card-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
 
-    .card-price {
-      color: green;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
+        .card-price {
+            color: green;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
 
-    .card-button {
-      padding: 8px 12px;
-      background-color: #7c4f20;
-      font-weight: bolder;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
+        .card-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 15px;
+        }
 
-    }
+        .card-button {
+            padding: 8px 12px;
+            background-color: #7c4f20;
+            font-weight: bolder;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            flex-grow: 1;
+            text-align: center;
+            white-space: nowrap;
+        }
 
-    .card-button:hover {
-      background-color: #f7b016;
-      color: black;
-      font-weight: bolder;
-    }
+        .card-button:hover {
+            background-color: #f7b016;
+            color: black;
+            font-weight: bolder;
+        }
 
-    .card-fav {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 40px;
-      color: #f8f5f5;
-      /* background: white; */
-      /* border-radius: 50%; */
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 2;
-      transition: color 0.3s;
-    }
+        .add-to-cart-button {
+            background-color: #7c4f20;
+        }
 
-    .card-fav.fav {
-      color: red;
-    }
+        .add-to-cart-button:hover {
+            background-color: #f7b016;
+            color: white;
+        }
 
-    .card {
-      position: relative;
-    }
-  </style>
+        .remove-from-cart-button {
+            background-color: #dc3545;
+        }
+
+        .remove-from-cart-button:hover {
+            background-color: #c82333;
+            color: white;
+        }
+
+
+        .card-fav {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 34px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+            transition: color 0.3s;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-fav.fav {
+            color: red;
+        }
+
+        .top-icons {
+            display: flex;
+            gap: 15px;
+            font-size: 28px;
+            color: #7c4f20;
+        }
+
+        .top-icon {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            position: relative;
+        }
+
+        .top-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Active state for top icons */
+        .top-icon.active {
+            background-color: #7c4f20; /* Highlight color */
+            border-radius: 50%;
+            padding: 1px;
+            transform: scale(1.1); /* Keep slightly scaled for emphasis */
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 7px;
+            font-size: 14px;
+            line-height: 1;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        #showAllProductsBtn {
+            padding: 8px 15px;
+            background-color: #7c4f20;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 20px;
+            display: none;
+            white-space: nowrap;
+        }
+
+        #showAllProductsBtn:hover {
+            background-color: #f7b016;
+            color: black;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .search-sort {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .search-sort input,
+            .search-sort select {
+                flex-grow: 1;
+            }
+
+            .top-icons {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .card-buttons {
+                flex-direction: column;
+            }
+
+            #showAllProductsBtn {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <h1>Home Decor Collection</h1>
+    <h1>Home Decor Collection</h1>
 
-  <div class="controls">
-    <div class="search-sort">
-      <input type="text" id="searchInput" placeholder="Search items..." />
-      <select id="sortSelect">
-        <option value="">Sort By</option>
-        <option value="priceLow">Price: Low to High</option>
-        <option value="priceHigh">Price: High to Low</option>
-      </select>
+    <div class="controls">
+        <div class="search-sort">
+            <input type="text" id="searchInput" placeholder="Search items..." />
+            <select id="sortSelect">
+                <option value="">Sort By</option>
+                <option value="priceLow">Price: Low to High</option>
+                <option value="priceHigh">Price: High to Low</option>
+            </select>
+        </div>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="top-icons">
+                <span class="top-icon" id="favIcon" onclick="toggleFavoritesView()">❤️</span>
+                <span class="top-icon" id="cartIcon" onclick="toggleCartView()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </span>
+            </div>
+            <button id="showAllProductsBtn" onclick="showAllProducts()">Show All Products</button>
+        </div>
     </div>
-  </div>
 
-  <div class="product-grid" id="productGrid"></div>
-  
+    <div class="product-grid" id="productGrid"></div>
 
-  <script>
-    const items = [
-      {
-        id: "home1",
-        title: "Abhedabhava:Krishna Playing Flute with Radha by His Side",
-        price: 13500,
-        image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-greenstone-statue-radha-krishna-34_grande.jpeg?v=1487657372",
-      },
-      {
-        id: "home2",
-        title: "Chaturbhuj: One Who Has Four Arms",
-        price: 27500,
-        image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-redstone-statue-ganesha-32_grande.jpeg?v=1487657525",
-      },
-      {
-        id: "home3",
-        title: "Abhirupa: The Beautiful Lady Musician",
-        price: 3069,
-        image: "https://www.artisanscrest.in/cdn/shop/products/actmsslpmi-84_grande.jpg?v=1488439779",
-      }, {
-        id: "home4",
-        title: "Deepasthambham Plain",
-        price: 54500,
-        image: "https://www.artisanscrest.in/cdn/shop/products/kerala-lamp-bell-metal-handmade-04_grande.jpg?v=1487056259",
-      },
-      {
-        id: "home5",
-        title: "Padmanabha: The Supreme God",
-        price: 6000,
-        image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-redstone-statue-narayan-09_grande.jpeg?v=1487658607",
-      },
-      {
-        id: "home6",
-        title: "Samavaaya: The Perpetual Co-Inherence",
-        price: 6500,
-        image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-redstone-statue-radha-krishna-02_grande.jpeg?v=1487658742",
-      }
-    ];
+    <script>
+        const items = [
+            {
+                id: "home1",
+                title: "Abhedabhava:Krishna Playing Flute with Radha by His Side",
+                price: 13500,
+                image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-greenstone-statue-radha-krishna-34_grande.jpeg?v=1487657372",
+            },
+            {
+                id: "home2",
+                title: "Chaturbhuj: One Who Has Four Arms",
+                price: 27500,
+                image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-redstone-statue-ganesha-32_grande.jpeg?v=1487657525",
+            },
+            {
+                id: "home3",
+                title: "Abhirupa: The Beautiful Lady Musician",
+                price: 3069,
+                image: "https://www.artisanscrest.in/cdn/shop/products/actmsslpmi-84_grande.jpg?v=1488439779",
+            }, {
+                id: "home4",
+                title: "Deepasthambham Plain",
+                price: 54500,
+                image: "https://www.artisanscrest.in/cdn/shop/products/kerala-lamp-bell-metal-handmade-04_grande.jpg?v=1487056259",
+            },
+            {
+                id: "home5",
+                title: "Padmanabha: The Supreme God",
+                price: 6000,
+                image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-redstone-statue-narayan-09_grande.jpeg?v=1487658607",
+            },
+            {
+                id: "home6",
+                title: "Samavaaya: The Perpetual Co-Inherence",
+                price: 6500,
+                image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-redstone-statue-radha-krishna-02_grande.jpeg?v=1487658742",
+            }
+        ];
 
-    const grid = document.getElementById("productGrid");
-    const searchInput = document.getElementById("searchInput");
-    const sortSelect = document.getElementById("sortSelect");
+        const grid = document.getElementById("productGrid");
+        const searchInput = document.getElementById("searchInput");
+        const sortSelect = document.getElementById("sortSelect");
+        const favIcon = document.getElementById("favIcon");
+        const cartIcon = document.getElementById("cartIcon");
+        const cartCount = document.getElementById("cartCount");
+        const showAllProductsBtn = document.getElementById("showAllProductsBtn");
 
-    function renderItems(data) {
-      grid.innerHTML = "";
-      data.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "card";
-        card.onclick = () => {
-          window.location.href = `Details/item-detail.html?itemId=${item.id}`;
+        let showFavoritesOnly = false;
+        let showCartItemsOnly = false;
+
+        // --- Local Storage Helpers ---
+        function getFavorites() {
+            return JSON.parse(localStorage.getItem("homeDecorFavorites")) || [];
+        }
+
+        function saveFavorites(favs) {
+            localStorage.setItem("homeDecorFavorites", JSON.stringify(favs));
+        }
+
+        function getCartItems() {
+            return JSON.parse(localStorage.getItem("homeDecorCart")) || [];
+        }
+
+        function saveCartItems(cart) {
+            localStorage.setItem("homeDecorCart", JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        // --- Cart Functionality ---
+        function addToCart(id, event) {
+            event.stopPropagation();
+            let cart = getCartItems();
+            if (!cart.includes(id)) {
+                cart.push(id);
+                saveCartItems(cart);
+                alert(`"${items.find(item => item.id === id).title}" added to cart!`);
+                filterAndSortItems();
+            } else {
+                alert(`"${items.find(item => item.id === id).title}" is already in your cart.`);
+            }
+        }
+
+        function removeFromCart(id, event) {
+            event.stopPropagation();
+            let cart = getCartItems();
+            cart = cart.filter(itemId => itemId !== id);
+            saveCartItems(cart);
+            alert(`"${items.find(item => item.id === id).title}" removed from cart.`);
+            filterAndSortItems();
+        }
+
+        function updateCartCount() {
+            const cart = getCartItems();
+            cartCount.textContent = cart.length;
+            cartCount.style.display = cart.length > 0 ? 'inline-block' : 'none';
+        }
+
+        // --- Favorite Functionality ---
+        window.toggleFavorite = function (id, element) {
+            let favs = getFavorites();
+            if (favs.includes(id)) {
+                favs = favs.filter(itemId => itemId !== id);
+                element.classList.remove('fav');
+                element.innerHTML = '♡';
+            } else {
+                favs.push(id);
+                element.classList.add('fav');
+                element.innerHTML = '♥';
+            }
+            saveFavorites(favs);
+            filterAndSortItems();
         };
 
-        card.innerHTML = `
-          <div class="card-fav" onclick="event.stopPropagation(); toggleFavorite('${item.id}', this)">♡</div>
-          <img src="${item.image}" alt="${item.title}" />
-          <div class="card-body">
-            <div class="card-title">${item.title}</div>
-            <div class="card-price">₹${item.price.toLocaleString()}</div>
-            <button class="card-button">View Details</button>
-          </div>
-        `;
+        // --- Global Reset / Show All Function ---
+        function showAllProducts() {
+            showFavoritesOnly = false;
+            showCartItemsOnly = false;
+            favIcon.classList.remove("active"); // Remove active class from fav icon
+            cartIcon.classList.remove("active"); // Remove active class from cart icon
+            showAllProductsBtn.style.display = 'none'; // Hide the "Show All Products" button
+            searchInput.value = '';
+            sortSelect.value = '';
+            searchInput.disabled = false;
+            sortSelect.disabled = false;
+            filterAndSortItems();
+        }
 
-        grid.appendChild(card);
-      });
-    }
+        // --- View Toggling Functions ---
+        function toggleCartView() {
+            if (showCartItemsOnly) {
+                // If cart view is currently active, clicking again should show all products
+                showAllProducts();
+            } else {
+                // Activate cart view
+                showCartItemsOnly = true;
+                cartIcon.classList.add("active"); // Highlight cart icon
+                // Deactivate favorites view
+                showFavoritesOnly = false;
+                favIcon.classList.remove("active"); // Remove highlight from fav icon
 
-    function filterAndSortItems() {
-      const query = searchInput.value.toLowerCase();
-      let filtered = items.filter(item =>
-        item.title.toLowerCase().includes(query)
-      );
+                searchInput.value = '';
+                sortSelect.value = '';
+                searchInput.disabled = false;
+                sortSelect.disabled = false;
+                filterAndSortItems();
+            }
+        }
 
-      const sortValue = sortSelect.value;
-      if (sortValue === "priceLow") {
-        filtered.sort((a, b) => a.price - b.price);
-      } else if (sortValue === "priceHigh") {
-        filtered.sort((a, b) => b.price - a.price);
-      }
+        function toggleFavoritesView() {
+            if (showFavoritesOnly) {
+                // If favorites view is currently active, clicking again should show all products
+                showAllProducts();
+            } else {
+                // Activate favorites view
+                showFavoritesOnly = true;
+                favIcon.classList.add("active"); // Highlight fav icon
+                // Deactivate cart view
+                showCartItemsOnly = false;
+                cartIcon.classList.remove("active"); // Remove highlight from cart icon
 
-      renderItems(filtered);
-    }
+                searchInput.value = '';
+                sortSelect.value = '';
+                searchInput.disabled = false;
+                sortSelect.disabled = false;
+                filterAndSortItems();
+            }
+        }
 
-    searchInput.addEventListener("input", filterAndSortItems);
-    sortSelect.addEventListener("change", filterAndSortItems);
+        function renderItems(data) {
+            grid.innerHTML = "";
+            const favorites = getFavorites();
+            const cartItems = getCartItems();
 
-    renderItems(items);
+            // Manage visibility of "Show All Products" button based on active view
+            if (showFavoritesOnly || showCartItemsOnly) {
+                showAllProductsBtn.style.display = 'inline-block';
+            } else {
+                showAllProductsBtn.style.display = 'none';
+            }
 
-    const favoriteItems = new Set();
+            if (data.length === 0) {
+                let message = "No items found matching your criteria.";
+                if (showFavoritesOnly) {
+                    message = "You haven't marked any items as favorites yet.";
+                } else if (showCartItemsOnly) {
+                    message = "Your cart is empty.";
+                }
+                grid.innerHTML = `<p style="text-align: center; color: #555; margin-top: 50px;">${message}</p>`;
+                return;
+            }
 
-    function toggleFavorite(id, elem) {
-      if (favoriteItems.has(id)) {
-        favoriteItems.delete(id);
-        elem.classList.remove("fav");
-        elem.textContent = "♡";
-      } else {
-        favoriteItems.add(id);
-        elem.classList.add("fav");
-        elem.textContent = "♥";
-      }
-    }
+            data.forEach(item => {
+                const isFav = favorites.includes(item.id);
+                const isInCart = cartItems.includes(item.id);
 
-  </script>
+                const card = document.createElement("div");
+                card.className = "card";
+
+                card.innerHTML = `
+                    <div class="card-fav ${isFav ? 'fav' : ''}" onclick="event.stopPropagation(); toggleFavorite('${item.id}', this)">
+                        ${isFav ? '♥' : '♡'}
+                    </div>
+                    <img src="${item.image}" alt="${item.title}" />
+                    <div class="card-body">
+                        <div class="card-title">${item.title}</div>
+                        <div class="card-price">₹${item.price.toLocaleString()}</div>
+                        <div class="card-buttons">
+                            <button class="card-button" onclick="event.stopPropagation(); viewDetails('${item.id}')">View Details</button>
+                            ${isInCart ?
+                                `<button class="card-button remove-from-cart-button" onclick="removeFromCart('${item.id}', event)">Remove from Cart</button>` :
+                                `<button class="card-button add-to-cart-button" onclick="addToCart('${item.id}', event)">Add to Cart</button>`
+                            }
+                        </div>
+                    </div>
+                `;
+
+                card.onclick = (event) => {
+                    if (!event.target.closest('.card-fav') && !event.target.closest('.card-button')) {
+                        viewDetails(item.id);
+                    }
+                };
+
+                grid.appendChild(card);
+            });
+        }
+
+        function viewDetails(itemId) {
+            window.location.href = `Details/item-detail.html?itemId=${itemId}`;
+        }
+
+        function filterAndSortItems() {
+            let currentData = [...items];
+
+            if (showFavoritesOnly) {
+                const favorites = getFavorites();
+                currentData = currentData.filter(item => favorites.includes(item.id));
+            } else if (showCartItemsOnly) {
+                const cartItems = getCartItems();
+                currentData = currentData.filter(item => cartItems.includes(item.id));
+            }
+
+            const query = searchInput.value.toLowerCase();
+            if (query) {
+                currentData = currentData.filter(i => i.title.toLowerCase().includes(query));
+            }
+
+            const sort = sortSelect.value;
+            if (sort) {
+                if (sort === "priceLow") {
+                    currentData.sort((a, b) => a.price - b.price);
+                } else if (sort === "priceHigh") {
+                    currentData.sort((a, b) => b.price - a.price);
+                }
+            }
+
+            renderItems(currentData);
+        }
+
+        // Event Listeners
+        searchInput.addEventListener("input", filterAndSortItems);
+        sortSelect.addEventListener("change", filterAndSortItems);
+
+        // Initial setup on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+            filterAndSortItems();
+        });
+    </script>
 </body>
 
 </html>

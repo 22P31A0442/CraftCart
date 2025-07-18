@@ -1,99 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Checkout</title>
-  <style>
-  body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    /* background-color: rgb(251, 220, 155); */
-    background-color: #7c4f20;
-  }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            /* background-color: rgb(251, 220, 155); */
+            background-color: #7c4f20;
+        }
 
-  .checkout-container {
-    max-width: 500px;
-    margin: auto;
-    /* background-color: #7c4f20; */
-    background-color: rgb(251, 220, 155);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    text-align: center; /* Center-aligns all content inside */
-  }
+        .checkout-container {
+            max-width: 600px;
+            margin: auto;
+            /* background-color: #7c4f20; */
+            background-color: rgb(251, 220, 155);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            /* Center-aligns all content inside */
+        }
 
-  img {
-    max-width: 100%;
-    height: 250px;
-    border-radius: 10px;
-    object-fit: cover;
-    display: block;
-    margin: 0 auto 20px auto; /* Center image and add spacing below */
-  }
+        img {
+            max-width: 100%;
+            height: 250px;
+            border-radius: 10px;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 20px auto;
+            /* Center image and add spacing below */
+        }
 
-  h2 {
-    margin-top: 0;
-    font-size: 28px;
-    color: #2c2c2c;
-  }
+        h2 {
+            margin-top: 0;
+            font-size: 28px;
+            color: #2c2c2c;
+        }
 
-  .price {
-    color: #b12704;
-    font-size: 24px;
-    margin: 15px 0;
-    font-weight: 700;
-  }
+        .price {
+            color: #b12704;
+            font-size: 24px;
+            margin: 15px 0;
+            font-weight: 700;
+        }
 
-  p {
-    font-size: 16px;
-    line-height: 1.5;
-    color: #333;
-  }
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+        }
 
-  .btn {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
-    font-weight: bolder;
-  }
+        .btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+            font-weight: bolder;
+        }
 
-  .btn:hover {
-    background-color: #218838;
-  }
-  .btn1{
-    background-color: #f4c95d ;
-    color: black;
-    border: none;
-    padding: 12px 25px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
-    font-weight: bolder;
-  }
-  .btn1:hover {
-    background-color: #e0b14a;
-  }
-</style>
+        .btn:hover {
+            background-color: #218838;
+        }
+
+        .btn1 {
+            background-color: #f4c95d;
+            color: black;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+            font-weight: bolder;
+        }
+
+        .btn1:hover {
+            background-color: #e0b14a;
+        }
+
+        #checkoutDetails input,
+        #checkoutDetails textarea,
+        #checkoutDetails select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #checkoutDetails .btn,
+        #checkoutDetails .btn1 {
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-group-inline {
+            display: flex;
+            /* Makes the children (label and input) flex items */
+            align-items: center;
+            /* Vertically aligns label and input in the middle */
+            margin-bottom: 20px;
+            /* Adds space between each row of form elements */
+            gap: 15px;
+            /* Adds space between the label and the input */
+        }
+
+        .form-group-inline label {
+            flex-shrink: 0;
+            /* Prevents the label from shrinking on smaller screens */
+            width: 120px;
+            /* Give labels a fixed width for alignment (adjust as needed) */
+            text-align: right;
+            /* Align label text to the right */
+            padding-right: 10px;
+            /* Add some padding between label text and input */
+            margin-bottom: 0;
+            /* Remove default bottom margin from label */
+        }
+
+        .form-group-inline input[type="text"],
+        .form-group-inline input[type="email"],
+        .form-group-inline input[type="tel"],
+        .form-group-inline textarea,
+        .form-group-inline select {
+            flex-grow: 1;
+            /* Allows the input field to take up remaining space */
+            width: auto;
+            /* Override default width to allow flex-grow to work */
+            margin: 0;
+            /* Remove default margins from input fields */
+        }
+
+        .style1 img {
+            width: 100%;
+            /* Make image fill container width */
+            height: 200px;
+            /* Give container a fixed height */
+            object-fit: cover;
+            }
+    </style>
 
 </head>
+
 <body>
 
-<div class="checkout-container" id="checkoutDetails">
-  <!-- JS will load product here -->
-</div>
+    <div class="checkout-container" id="checkoutDetails">
+        <!-- JS will load product here -->
+    </div>
 
-<script>
-    const productData = {
-        home1: {
+    <script>
+        const productData = {
+            home1: {
                 title: "Abhedabhava:Krishna Playing Flute with Radha by His Side",
                 description: " Radha and Krishna even after being separated remain united in soul, spirit and in the consciousness of millions of followers.The love of Radha and Krishna is the blissful form of divine regality, an ocean of unlimited divine bliss. Krishna is referred as the “poornatam purushottam brahma” or the supreme personality of the god. Thus all the forms of god reside within Krishna, where all the forms are absolute and divinely one. This green stone carved sculpture in all its magnificence potrays the divine bonding of radha and krishna in Gokul.",
                 image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-greenstone-statue-radha-krishna-34_grande.jpeg?v=1487657372",
@@ -149,7 +219,7 @@
                 title: "Ananda-Swarupa: Embodiment of Supreme Bliss",
                 image: "https://www.artisanscrest.in/cdn/shop/products/acdtbwrkpf-08_grande.jpg?v=1634713029",
                 price: 72000,
-                description: "Celebrate the eternal love of Shri Krishna and Devi Radha by installing this exquisite sculpture at your home. Made of Beechwood, it depicts the duo blissfully lost in the music as a cow joins them. Each detail has been carefully carved by the artisan to bring out the true beauty of this sculpture.Note: In all its grandeur this can be custom made i.e., hand crafted exclusively for you in a size of your choice to suit your needs.Dimensions: 36"           
+                description: "Celebrate the eternal love of Shri Krishna and Devi Radha by installing this exquisite sculpture at your home. Made of Beechwood, it depicts the duo blissfully lost in the music as a cow joins them. Each detail has been carefully carved by the artisan to bring out the true beauty of this sculpture.Note: In all its grandeur this can be custom made i.e., hand crafted exclusively for you in a size of your choice to suit your needs.Dimensions: 36"
             },
             wood4: {
                 title: "Banvihari: Lord who Loves Roaming in Forest",
@@ -214,7 +284,7 @@
             //PAINTING DETAILS
             paint1: {
                 title: "Avaneesh : Ganesha Standing with Sevikas",
-                price: 2450 ,
+                price: 2450,
                 image: "https://www.artisanscrest.in/cdn/shop/products/pattachitra-painting-handmade-ganesha-41_grande.jpeg?v=1486709530",
                 description: "Avaneesh:Lord of the world. This pattachitra depicts the destroyer of obstacles, lord Ganesha with sevikas.In Sanskrit,Pattachitra literally means cloth painting; 'pata' (cloth), and 'chitra' (painting). This form of art work was first conceptualized in Orissa and dates back to the 5th century. According to historical evidence, the first forms of Patachitra art originated in the village of Puri, where this art work is still quite popular. The artists who practiced this craft were known as Mohapatras or Maharanas, The astounding temples and architecture in Orissa is what lent its inspiration to all these creative craftsman who narrated pictorial stories through their paintings and detailed work.Note: In all its detail this can be custom made and hand crafted exclusively in a size of your choice to suit your exclusive needs."
             },
@@ -226,25 +296,25 @@
             },
             paint3: {
                 title: "Akshaya Vata: The Eternal Banyan Tree",
-                price: 17500 ,
+                price: 17500,
                 image: "https://www.artisanscrest.in/cdn/shop/products/pattachitra-painting-handmade-tree-of-life-01_grande.jpg?v=1486712295",
                 description: "It is believed that during the cyclic destruction of creation when the whole earth was enveloped with water, Akshaya Vrata remained unaffected. It is on the leaves of this tree that Lord Krishna rested in the form of a baby when land was no longer visible. And it is here that the immortal sage, Markandeya, received the cosmic vision of the Lord. It is under this tree that Buddha meditates eternally. Legend also has it that the Bodi tree at Gaya is a manifestation of this tree. Dimension 36 inches x 24 inches.Pattachitra painters, who make paintings over a piece of cloth known as Patta or a dried palm leaf, specialize in this unique art-form since generations. Raghurajpur a heritage crafts village in Puri district, Odisha is famous for this ancient craft-works which at least date back to 5 BC. A mixture of chalk and gum is used in unique proportion to create this beautiful piece."
             },
             paint4: {
                 title: "Annapoorneshwari: The Goddess who Feeds One and All",
-                price: 120000 ,
+                price: 120000,
                 image: "https://www.artisanscrest.in/cdn/shop/products/02annapoorneswari_grande.jpg?v=1512624722",
                 description: "Annapoorna Devi or Annapoorneshwari is considered to be an avatar of goddess Parvati, wife of Lord Shiva. It is said that a long time ago, Devi Parvati was offended by Lord Shiva's remark that everything materialistic including food is Maya. To prove the importance of sustenance, the Goddess disappeared from the world and as a result, nature came to a standstill. However, she could not see the plight of her devotees and reappeared in Kashi. Lord Shiva, realising his mistake, rushed to her and begged for alms. This Kerala Mural depicts goddess Annapoorna in her resplendent glory after returning to Kashi, serving food to her devotees. This painting can be an excellent adornment to the abundance that flows through your dining room."
             },
             paint5: {
                 title: "Brajamohan: The attractive God from Braj",
-                price: 27000 ,
+                price: 27000,
                 image: "https://www.artisanscrest.in/cdn/shop/products/acsmpclkpf-14_grande.jpg?v=1626162338",
                 description: "Lord Krishna possessed such charming effect on people of Vrindavan that his mere presence would mesmerize them and fill them with joy. The melody of his flute used to send Gopis of Vrindavan into a state of blissful trance. This Pattachitra painting captures the essence of the same. Painted in bright colours, this one is a great addition to your collection.Note: In all its grandeur this can be custom made i.e., handcrafted exclusively for you in a size of your choice to suit your needs."
             },
             paint6: {
                 title: "Jagannath: The Master of the Universe",
-                price: 1200 ,
+                price: 1200,
                 image: "https://www.artisanscrest.in/cdn/shop/products/acbpspljop-84_grande.jpg?v=1488436881",
                 description: "In Sanskrit, Jagannatha translates to He who is the shelter of the moving World. Immortalized as the protector and lord of the living world, Jagannatha is the divine Lord of the world and everything in it. Known to work in tandem with his brother Balabhadra and his sister Subhadra, Jagannatha is the embodiment of protection and care for all living beings, and the master of the Universe and all beings within. Created over a piece of cloth or a dried palm leaf, the Pattachitra art form dates back to 5 BC and is a hallmark of Raghurajpur, a heritage crafts village in the Puri district of Odisha. A unique addition to your home, this beautiful work of art makes a perfect addition to your living room or den."
             },
@@ -326,15 +396,15 @@
                 image: "https://www.artisanscrest.in/cdn/shop/products/acgptcstgp-83_grande.jpg?v=1487682284",
                 description: "Indian handloom creations are in great demand among fashion connoisseurs across the world for their bright and vibrant colours, their intricate embroidery and the handcrafted skill of the master weavers of rural India. This exquisite stole is a testimony to the skills and talent of the rural craftsmen who work magic with Tussar silk to create this masterpiece in cloth. The light and elegant stole is characterized by the vibrant orange, green and brown hues, perfectly complemented by the bright pink motifs along the borders of the garment. This stole has a pleasing visual appearance and is perfect to wear with a light coloured ethnic ensemble. The exquisite garment is made from light fabric, making it perfect to wear across all weather conditions and adds a touch of culture and artistic heritage to your wardrobe."
             },
-    };
-    const params = new URLSearchParams(window.location.search);
-    const itemId = params.get('itemId');
-    const item = productData[itemId];
+        };
+        const params = new URLSearchParams(window.location.search);
+        const itemId = params.get('itemId');
+        const item = productData[itemId];
 
-    const container = document.getElementById("checkoutDetails");
+        const container = document.getElementById("checkoutDetails");
 
-    if (item) {
-        container.innerHTML = `
+        if (item) {
+            container.innerHTML = `
           <h2>Order Summary</h2>
           <img src="${item.image}" alt="${item.title}" />
           <h3>${item.title}</h3>
@@ -344,17 +414,67 @@
         <button  onclick="goBack()" class="btn1">Back to Home</button>
 
         `;
-    } else {
-        container.innerHTML = "<h2>Product not found.</h2>";
-    }
+        } else {
+            container.innerHTML = "<h2>Product not found.</h2>";
+        }
 
-    function proceedToPayment() {
-        alert("Redirecting to payment gateway...");
-    }
-    function goBack() {
-      window.location.href = "../../task.html";  
-    }
-</script>
+        function proceedToPayment() {
+            const paymentFormHTML = `
+        <h2>Payment Details</h2>
+        <form id="paymentForm" onsubmit="submitPayment(event)">
+            <div class="form-group-inline">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" required placeholder="Your Name" />
+            </div>
+
+            <div class="form-group-inline">
+            <label>Email</label>
+            <input type="email" required placeholder="your@example.com" />
+            </div>
+
+            <div class="form-group-inline">
+            <label>Phone Number</label>
+            <input type="tel" required placeholder="1234567890" />
+            </div>
+
+            <div class="form-group-inline">
+            <label>Address</label>
+            <textarea required placeholder="Delivery Address"></textarea>
+            </div>
+
+            <div class="form-group-inline">
+            <label>Payment Option</label>
+            <select required>
+                <option value="">Select</option>
+                <option value="upi">UPI</option>
+                <option value="card">Credit/Debit Card</option>
+                <option value="cod">Cash on Delivery</option>
+            </select>
+            </div>
+
+            <div style="margin: 20px 0;text-align: center;" class"style1">
+                <label>Scan UPI QR (if applicable)</label><br /><br/>
+                <img src="data:image/png;base64,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" width="200" alt="UPI QR Code"/>
+            </div>
+
+            <button type="submit" class="btn">Pay Now</button>
+            <button type="button" onclick="goBack()" class="btn1">Cancel</button>
+        </form>
+    `;
+
+            document.getElementById("checkoutDetails").innerHTML = paymentFormHTML;
+        }
+
+        function submitPayment(event) {
+            event.preventDefault();
+            alert("Payment Successful! Thank you for your order.");
+            window.location.href = "../../task.html"; // Replace with your order confirmation page if needed
+        }
+        function goBack() {
+            window.location.href = "../../task.html"; // change this to your homepage path
+        }
+    </script>
 
 </body>
+
 </html>

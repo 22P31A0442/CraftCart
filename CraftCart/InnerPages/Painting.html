@@ -24,6 +24,7 @@
             justify-content: space-between;
             flex-wrap: wrap;
             margin-bottom: 20px;
+            align-items: center; /* Align items vertically */
         }
 
         .search-sort {
@@ -64,6 +65,7 @@
             width: 100%;
             height: 380px;
             object-fit: cover;
+            object-position: center;
         }
 
         .card-body {
@@ -83,6 +85,13 @@
             margin-bottom: 10px;
         }
 
+        .card-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
         .card-button {
             padding: 8px 12px;
             background-color: #7c4f20;
@@ -91,7 +100,9 @@
             border: none;
             border-radius: 6px;
             cursor: pointer;
-
+            flex-grow: 1;
+            text-align: center;
+            white-space: nowrap;
         }
 
         .card-button:hover {
@@ -100,24 +111,144 @@
             font-weight: bolder;
         }
 
+        /* Styles for Add to Cart and Remove from Cart buttons */
+        .add-to-cart-button {
+            background-color: #7c4f20;
+        }
+
+        .add-to-cart-button:hover {
+            background-color: #f7b016;
+            color: white;
+        }
+
+        .remove-from-cart-button {
+            background-color: #dc3545; /* Red color for remove */
+        }
+
+        .remove-from-cart-button:hover {
+            background-color: #c82333;
+            color: white;
+        }
+
         .card-fav {
             position: absolute;
             top: 10px;
             right: 10px;
-            font-size: 40px;
-            color: #f8f5f5;
-            width: 32px;
-            height: 32px;
+            font-size: 34px; /* Adjusted size for better appearance */
+            color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             z-index: 2;
             transition: color 0.3s;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow for visibility */
         }
 
         .card-fav.fav {
             color: red;
+        }
+
+        /* Top icons for Favorites and Cart */
+        .top-icons {
+            display: flex;
+            gap: 15px;
+            font-size: 28px;
+            color: #7c4f20;
+        }
+
+        .top-icon {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            position: relative; /* For cart count positioning */
+        }
+
+        .top-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .top-icon.active {
+            background-color: #7c4f20; /* Highlight color */
+            border-radius: 50%;
+            padding: 1px;
+            transform: scale(1.1); /* Keep slightly scaled for emphasis */
+        }
+
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 7px;
+            font-size: 14px;
+            line-height: 1;
+            font-weight: bold;
+            pointer-events: none; /* Allows clicks to pass through to the icon */
+        }
+
+        /* Style for the "Show All Products" button */
+        #showAllProductsBtn {
+            padding: 8px 15px;
+            background-color: #7c4f20;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 20px;
+            display: none; /* Hidden by default, shown when in favorite/cart view */
+            white-space: nowrap;
+        }
+
+        #showAllProductsBtn:hover {
+            background-color: #f7b016;
+            color: black;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .search-sort {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .search-sort input,
+            .search-sort select {
+                flex-grow: 1;
+            }
+
+            .top-icons {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .card-buttons {
+                flex-direction: column;
+            }
+
+            #showAllProductsBtn {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -134,6 +265,16 @@
                 <option value="priceLow">Price: Low to High</option>
                 <option value="priceHigh">Price: High to Low</option>
             </select>
+        </div>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="top-icons">
+                <span class="top-icon" id="favIcon" onclick="toggleFavoritesView()">❤️</span>
+                <span class="top-icon" id="cartIcon" onclick="toggleCartView()">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </span>
+            </div>
+            <button id="showAllProductsBtn" onclick="showAllProducts()">Show All Products</button>
         </div>
     </div>
 
@@ -182,55 +323,238 @@
         const grid = document.getElementById("productGrid");
         const searchInput = document.getElementById("searchInput");
         const sortSelect = document.getElementById("sortSelect");
-        const favoriteItems = new Set();
+        const favIcon = document.getElementById("favIcon"); // Get fav icon element
+        const cartIcon = document.getElementById("cartIcon"); // Get cart icon element
+        const cartCount = document.getElementById("cartCount"); // Get cart count element
+        const showAllProductsBtn = document.getElementById("showAllProductsBtn"); // Get show all products button
+
+        let showFavoritesOnly = false;
+        let showCartItemsOnly = false;
+
+        // --- Local Storage Helpers (Keep these separate for each page's unique data) ---
+        function getFavorites() {
+            return JSON.parse(localStorage.getItem("paintingFavorites")) || [];
+        }
+
+        function saveFavorites(favs) {
+            localStorage.setItem("paintingFavorites", JSON.stringify(favs));
+        }
+
+        function getCartItems() {
+            return JSON.parse(localStorage.getItem("paintingCart")) || [];
+        }
+
+        function saveCartItems(cart) {
+            localStorage.setItem("paintingCart", JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        // --- Cart Functionality ---
+        function addToCart(id, event) {
+            event.stopPropagation();
+            let cart = getCartItems();
+            if (!cart.includes(id)) {
+                cart.push(id);
+                saveCartItems(cart);
+                alert(`"${paintings.find(item => item.id === id).title}" added to cart!`);
+                filterAndSort(); // Re-render to update button state
+            } else {
+                alert(`"${paintings.find(item => item.id === id).title}" is already in your cart.`);
+            }
+        }
+
+        function removeFromCart(id, event) {
+            event.stopPropagation();
+            let cart = getCartItems();
+            cart = cart.filter(itemId => itemId !== id);
+            saveCartItems(cart);
+            alert(`"${paintings.find(item => item.id === id).title}" removed from cart.`);
+            filterAndSort(); // Re-render to show the item removed
+        }
+
+        function updateCartCount() {
+            const cart = getCartItems();
+            cartCount.textContent = cart.length;
+            cartCount.style.display = cart.length > 0 ? 'inline-block' : 'none';
+        }
+
+        // --- Favorite Functionality ---
+        window.toggleFavorite = function (id, element) {
+            let favs = getFavorites();
+            if (favs.includes(id)) {
+                favs = favs.filter(itemId => itemId !== id);
+                element.classList.remove('fav');
+                element.innerHTML = '♡';
+            } else {
+                favs.push(id);
+                element.classList.add('fav');
+                element.innerHTML = '♥';
+            }
+            saveFavorites(favs);
+            filterAndSort(); // Re-render to update the view
+        };
+
+        // --- Global Reset / Show All Function ---
+        function showAllProducts() {
+            showFavoritesOnly = false;
+            showCartItemsOnly = false;
+            favIcon.classList.remove("active"); // Remove active class from fav icon
+            cartIcon.classList.remove("active"); // Remove active class from cart icon
+            showAllProductsBtn.style.display = 'none'; // Hide the "Show All Products" button
+            searchInput.value = '';
+            sortSelect.value = '';
+            searchInput.disabled = false; // Re-enable for showing all products
+            sortSelect.disabled = false;  // Re-enable for showing all products
+            filterAndSort(); // This will now render all products
+        }
+
+        // --- View Toggling Functions ---
+        function toggleCartView() {
+            if (showCartItemsOnly) {
+                // If cart view is currently active, clicking again should show all products
+                showAllProducts();
+            } else {
+                // Activate cart view
+                showCartItemsOnly = true;
+                cartIcon.classList.add("active"); // Highlight cart icon
+                // Deactivate favorites view
+                showFavoritesOnly = false;
+                favIcon.classList.remove("active"); // Remove highlight from fav icon
+
+                searchInput.value = '';
+                sortSelect.value = '';
+                searchInput.disabled = false;
+                sortSelect.disabled = false;
+                filterAndSort();
+            }
+        }
+
+        function toggleFavoritesView() {
+            if (showFavoritesOnly) {
+                // If favorites view is currently active, clicking again should show all products
+                showAllProducts();
+            } else {
+                // Activate favorites view
+                showFavoritesOnly = true;
+                favIcon.classList.add("active"); // Highlight fav icon
+                // Deactivate cart view
+                showCartItemsOnly = false;
+                cartIcon.classList.remove("active"); // Remove highlight from cart icon
+
+                searchInput.value = '';
+                sortSelect.value = '';
+                searchInput.disabled = false;
+                sortSelect.disabled = false;
+                filterAndSort();
+            }
+        }
+
 
         function render(data) {
             grid.innerHTML = "";
+            const favorites = getFavorites();
+            const cartItems = getCartItems();
+
+            // Manage visibility of "Show All Products" button based on active view
+            if (showFavoritesOnly || showCartItemsOnly) {
+                showAllProductsBtn.style.display = 'inline-block';
+            } else {
+                showAllProductsBtn.style.display = 'none';
+            }
+
+            if (data.length === 0) {
+                let message = "No items found matching your criteria.";
+                if (showFavoritesOnly) {
+                    message = "You haven't marked any items as favorites yet.";
+                } else if (showCartItemsOnly) {
+                    message = "Your cart is empty.";
+                }
+                grid.innerHTML = `<p style="text-align: center; color: #555; margin-top: 50px;">${message}</p>`;
+                return;
+            }
+
             data.forEach(item => {
+                const isFav = favorites.includes(item.id);
+                const isInCart = cartItems.includes(item.id);
+
                 const card = document.createElement("div");
                 card.className = "card";
-                card.onclick = () => {
-                    window.location.href = `Details/item-detail.html?itemId=${item.id}`;
-                };
 
                 card.innerHTML = `
-          <div class="card-fav" onclick="event.stopPropagation(); toggleFavorite('${item.id}', this)">♡</div>
-          <img src="${item.image}" alt="${item.title}" />
-          <div class="card-body">
-            <div class="card-title">${item.title}</div>
-            <div class="card-price">₹${item.price.toLocaleString()}</div>
-            <button class="card-button">View Details</button>
-          </div>
-        `;
+                    <div class="card-fav ${isFav ? 'fav' : ''}" onclick="event.stopPropagation(); toggleFavorite('${item.id}', this)">
+                        ${isFav ? '♥' : '♡'}
+                    </div>
+                    <img src="${item.image}" alt="${item.title}" />
+                    <div class="card-body">
+                        <div class="card-title">${item.title}</div>
+                        <div class="card-price">₹${item.price.toLocaleString()}</div>
+                        <div class="card-buttons">
+                            <button class="card-button" onclick="event.stopPropagation(); viewDetails('${item.id}')">View Details</button>
+                            ${isInCart ?
+                                `<button class="card-button remove-from-cart-button" onclick="removeFromCart('${item.id}', event)">Remove from Cart</button>` :
+                                `<button class="card-button add-to-cart-button" onclick="addToCart('${item.id}', event)">Add to Cart</button>`
+                            }
+                        </div>
+                    </div>
+                `;
+
+                card.onclick = (event) => {
+                    // Prevent card click from triggering viewDetails if a button or fav icon was clicked
+                    if (!event.target.closest('.card-fav') && !event.target.closest('.card-button')) {
+                        viewDetails(item.id);
+                    }
+                };
 
                 grid.appendChild(card);
             });
         }
 
+        function viewDetails(itemId) {
+            // Placeholder for your item-detail page. Make sure this path is correct.
+            window.location.href = `Details/item-detail.html?itemId=${itemId}`;
+        }
+
         function filterAndSort() {
-            const query = searchInput.value.toLowerCase();
-            let filtered = paintings.filter(i => i.title.toLowerCase().includes(query));
-            const sort = sortSelect.value;
-            if (sort === "priceLow") filtered.sort((a, b) => a.price - b.price);
-            else if (sort === "priceHigh") filtered.sort((a, b) => b.price - a.price);
-            render(filtered);
-        }
+            let currentData = [...paintings]; // Start with a copy of all items
 
-        function toggleFavorite(id, elem) {
-            if (favoriteItems.has(id)) {
-                favoriteItems.delete(id);
-                elem.classList.remove("fav");
-                elem.textContent = "♡";
-            } else {
-                favoriteItems.add(id);
-                elem.classList.add("fav");
-                elem.textContent = "♥";
+            // 1. Filter based on active view (Favorites or Cart)
+            if (showFavoritesOnly) {
+                const favorites = getFavorites();
+                currentData = currentData.filter(item => favorites.includes(item.id));
+            } else if (showCartItemsOnly) {
+                const cartItems = getCartItems();
+                currentData = currentData.filter(item => cartItems.includes(item.id));
             }
+
+            // 2. Apply search to the *already filtered* data
+            const query = searchInput.value.toLowerCase();
+            if (query) {
+                currentData = currentData.filter(i => i.title.toLowerCase().includes(query));
+            }
+
+            // 3. Apply sort to the *already filtered and searched* data
+            const sort = sortSelect.value;
+            if (sort) {
+                if (sort === "priceLow") {
+                    currentData.sort((a, b) => a.price - b.price);
+                } else if (sort === "priceHigh") {
+                    currentData.sort((a, b) => b.price - a.price);
+                }
+            }
+
+            // Finally, render the processed data
+            render(currentData);
         }
 
+        // Event Listeners
         searchInput.addEventListener("input", filterAndSort);
         sortSelect.addEventListener("change", filterAndSort);
-        render(paintings);
+
+        // Initial setup on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+            filterAndSort(); // Use filterAndSort for initial render to handle states
+        });
     </script>
 </body>
 
