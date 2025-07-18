@@ -349,13 +349,15 @@ body{
       min-width: 300px;
     }
     .leftbox{
-      width: 100%;
+      width: 700px;
+      min-width: 300px;
       background-color: white;
       /* color: white; */
       padding: 10px;
       display: flex;
       flex-direction: column;
       box-shadow: 1px 1px grey;
+      margin-top: 58px;
       gap: 20px;
     }
     .rightpart{
