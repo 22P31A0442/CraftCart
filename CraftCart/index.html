@@ -1,0 +1,131 @@
+// DOM Elements
+const loginModal = document.getElementById('loginModal');
+const signupModal = document.getElementById('signupModal');
+const profilePopup = document.getElementById('profilePopup');
+const profileIcon = document.getElementById('profileIcon');
+const authButton = document.getElementById('authButton');
+const profileUsernameDisplay = document.getElementById('profileUsername');
+const profileEmailDisplay = document.getElementById('profileEmail');
+const loginForm = document.getElementById('loginForm');
+const signupForm = document.getElementById('signupForm');
+const loginUsernameInput = document.getElementById('loginUsername'); // Added ID to input
+const signupEmailInput = document.getElementById('signupEmail'); // Added ID to input
+
+let currentUser = null; // Stores logged-in user's data (username, email)
+
+// --- Modal Functions ---
+// These functions now directly control the display of their respective modals.
+function openModal(type) {
+  if (type === 'login') {
+    loginModal.style.display = 'flex';
+  } else if (type === 'signup') {
+    signupModal.style.display = 'flex';
+  }
+}
+
+function closeModal(type) {
+  if (type === 'login') {
+    loginModal.style.display = 'none';
+  } else if (type === 'signup') {
+    signupModal.style.display = 'none';
+  }
+  // Ensure profile popup is closed when any auth modal is closed
+  profilePopup.style.display = 'none';
+}
+
+// --- Authentication & Profile Functions ---
+
+// This function updates the visibility of the profile icon and the text/action of the auth button.
+function updateAuthUI() {
+  if (currentUser) {
+    // User is logged in
+    authButton.textContent = 'Logout';
+    authButton.onclick = logout; // Set button to logout function
+    profileIcon.style.display = 'inline-block'; // Show profile icon
+    profileUsernameDisplay.textContent = currentUser.username;
+    profileEmailDisplay.textContent = currentUser.email;
+  } else {
+    // User is logged out
+    authButton.textContent = 'Login / Signup';
+    authButton.onclick = () => openModal('login'); // Set button to open login modal
+    profileIcon.style.display = 'none'; // Hide profile icon
+    profilePopup.style.display = 'none'; // Hide profile popup
+  }
+}
+
+// Simulates user login
+function loginUser(username, email) {
+  currentUser = { username: username, email: email };
+  updateAuthUI(); // Update UI to reflect logged-in state
+  closeModal('login'); // Close login modal
+  closeModal('signup'); // Close signup modal if it was open
+}
+
+// Simulates user logout
+function logout() {
+  currentUser = null; // Clear current user data
+  updateAuthUI(); // Update UI to reflect logged-out state
+  profilePopup.style.display = 'none'; // Ensure profile popup is hidden
+}
+
+// --- Event Listeners for Forms and Icons ---
+
+// Login Form Submission
+loginForm.addEventListener('submit', function (e) {
+  e.preventDefault(); // Prevent default form submission
+  const username = loginUsernameInput.value; // Get value from the input with ID
+  const password = e.target.elements[1].value; // Access password by index (assuming order)
+
+  // Basic validation and simulated login
+  if (username && password) {
+    console.log(`Attempting login for: ${username}`);
+    // In a real application, you'd send these credentials to a server for verification.
+    // For this demo, we'll just "log them in"
+    loginUser(username, `${username.replace(/\s/g, '').toLowerCase()}@example.com`); // Generate a dummy email
+  } else {
+    alert('Please enter both username and password.');
+  }
+});
+
+// Signup Form Submission
+signupForm.addEventListener('submit', function (e) {
+  e.preventDefault(); // Prevent default form submission
+  const fullName = e.target.elements[0].value;
+  const email = signupEmailInput.value; // Get value from the input with ID
+  const password = e.target.elements[2].value;
+
+  // Basic validation and simulated signup
+  if (fullName && email && password) {
+    console.log(`Attempting signup for: ${fullName}, ${email}`);
+    // In a real application, you'd register the user on a server.
+    // For this demo, we'll just "log them in" after signup
+    loginUser(fullName, email);
+  } else {
+    alert('Please fill in all signup fields.');
+  }
+});
+
+// Profile Icon Click: Toggles the visibility of the profile popup
+profileIcon.addEventListener('click', () => {
+  if (currentUser) { // Only toggle if a user is logged in
+    profilePopup.style.display = profilePopup.style.display === 'block' ? 'none' : 'block';
+  }
+});
+
+// Close profile popup if clicked outside
+document.addEventListener('click', (event) => {
+  // Check if the click was outside the profile popup AND outside the profile icon,
+  // AND if the profile popup is currently visible.
+  if (
+    !profilePopup.contains(event.target) &&
+    !profileIcon.contains(event.target) &&
+    profilePopup.style.display === 'block'
+  ) {
+    profilePopup.style.display = 'none';
+  }
+});
+
+
+// --- Initial UI Setup ---
+// This is important: call it once when the page loads to set the correct initial state
+updateAuthUI();
