@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head><title>Profile</title></head>
+<body>
+  <h2>User Profile</h2>
+  <div id="profile"></div>
+
+  <script>
+    async function loadProfile() {
+      const token = localStorage.getItem('token');
+      if (!token) return alert('Please login first.');
+
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const userId = payload.id;
+
+      const res = await fetch(`http://localhost:5000/api/users/profile/${userId}`);
+      const data = await res.json();
+
+      if (data.name) {
+        document.getElementById('profile').innerHTML = `
+          <p>Name: ${data.name}</p>
+          <p>Email: ${data.email}</p>
+        `;
+      } else {
+        alert('Profile not found.');
+      }
+    }
+
+    loadProfile();
+  </script>
+</body>
+</html>

@@ -34,22 +34,22 @@
 .profile-icon:hover {
     color: #e0b14a; /* Highlight on hover */
 }
-
-/* Modal Styling */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 100; /* Sit on top */
+    display: none; /* Keep this as the default hidden state */
+    position: fixed;
+    z-index: 100;
     left: 0;
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
-    display: flex; /* Use flex to center content */
-    justify-content: center;
-    align-items: center;
+    /* REMOVE the duplicate 'display: flex;' from here.
+       The 'display: flex;' should only be applied by JavaScript when opening the modal. */
+    justify-content: center; /* These properties will apply when display is set to flex by JS */
+    align-items: center;    /* These properties will apply when display is set to flex by JS */
 }
+
 
 .modal-content {
     background-color: #fefefe;

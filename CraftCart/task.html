@@ -70,7 +70,9 @@
                     <div id="profilePopup" class="profile-popup">
                         <h3>Welcome, <span id="profileName"></span>!</h3>
                         <p><span>Have a Nice Day</span></p>
-                        <button onclick="logout()">Logout</button>
+                        <button id="logoutBtn" onclick="logout()">Logout</button>
+
+
                     </div>
                 </div>
             </div>
@@ -438,199 +440,325 @@
         showSlide(currentIndex);
 
         // ----------------------------------
-        const products = [
-            {
-                title: "HomeDecor",
-                description: "Antique lamps, pots, and traditional decor pieces crafted with elegance.",
-                image: "https://www.artisanscrest.in/cdn/shop/products/kerala-lamp-bell-metal-handmade-07_grande.jpg?v=1487056753",
-                link: "InnerPages/HomeDecor.html"
-            },
-            {
-                title: "Sculpture",
-                description: "Detailed sculptures of deities and historical figures in stone and bronze.",
-                image: "https://www.artisanscrest.in/cdn/shop/products/acibwssbam-13_grande.jpg?v=1570268395",
-                link: "InnerPages/Sculpture.html"
-            },
-            {
-                title: "WoodCraft",
-                description: "Intricate woodwork showcasing ancient Indian carving skills.",
-                image: "https://www.artisanscrest.in/cdn/shop/products/acdtbwrkpf-08_grande.jpg?v=1634713029",
-                link: "InnerPages/WoodCraft.html"
-            },
-            {
-                title: "Painting",
-                description: "Mythological stories and folk tales depicted in traditional styles.",
-                image: "https://www.artisanscrest.in/cdn/shop/products/04dancingKrishna_grande.jpg?v=1512624844",
-                link: "InnerPages/Painting.html"
-            },
-            {
-                title: "TribalArt",
-                description: "Vibrant and raw expressions of tribal culture and art forms.",
-                image: "https://www.artisanscrest.in/cdn/shop/products/IMG_6920_grande.jpg?v=1518497977",
-                link: "InnerPages/TribalArt.html"
-            },
-            {
-                title: "Handloom",
-                description: "Richly woven fabrics and patterns preserving heritage weaves.",
-                image: "https://www.artisanscrest.in/cdn/shop/products/acgptcshgb-87_grande.jpg?v=1487681961",
-                link: "InnerPages/Handloom.html"
-            }
-        ];
+        // const products = [
+        //     {
+        //         title: "HomeDecor",
+        //         description: "Antique lamps, pots, and traditional decor pieces crafted with elegance.",
+        //         image: "https://www.artisanscrest.in/cdn/shop/products/kerala-lamp-bell-metal-handmade-07_grande.jpg?v=1487056753",
+        //         link: "InnerPages/HomeDecor.html"
+        //     },
+        //     {
+        //         title: "Sculpture",
+        //         description: "Detailed sculptures of deities and historical figures in stone and bronze.",
+        //         image: "https://www.artisanscrest.in/cdn/shop/products/acibwssbam-13_grande.jpg?v=1570268395",
+        //         link: "InnerPages/Sculpture.html"
+        //     },
+        //     {
+        //         title: "WoodCraft",
+        //         description: "Intricate woodwork showcasing ancient Indian carving skills.",
+        //         image: "https://www.artisanscrest.in/cdn/shop/products/acdtbwrkpf-08_grande.jpg?v=1634713029",
+        //         link: "InnerPages/WoodCraft.html"
+        //     },
+        //     {
+        //         title: "Painting",
+        //         description: "Mythological stories and folk tales depicted in traditional styles.",
+        //         image: "https://www.artisanscrest.in/cdn/shop/products/04dancingKrishna_grande.jpg?v=1512624844",
+        //         link: "InnerPages/Painting.html"
+        //     },
+        //     {
+        //         title: "TribalArt",
+        //         description: "Vibrant and raw expressions of tribal culture and art forms.",
+        //         image: "https://www.artisanscrest.in/cdn/shop/products/IMG_6920_grande.jpg?v=1518497977",
+        //         link: "InnerPages/TribalArt.html"
+        //     },
+        //     {
+        //         title: "Handloom",
+        //         description: "Richly woven fabrics and patterns preserving heritage weaves.",
+        //         image: "https://www.artisanscrest.in/cdn/shop/products/acgptcshgb-87_grande.jpg?v=1487681961",
+        //         link: "InnerPages/Handloom.html"
+        //     }
+        // ];
 
+        // const grid = document.getElementById("productGrid");
+        // const searchInput = document.getElementById("searchInput");
+
+        // function renderProducts(data) {
+        //     grid.innerHTML = "";
+        //     data.forEach(item => {
+        //         const card = document.createElement("div");
+        //         card.className = "card";
+        //         card.setAttribute("data-title", item.title.toLowerCase());
+        //         card.onclick = () => {
+        //             window.location.href = item.link;
+        //         };
+
+        //         card.innerHTML = `
+        //   <img src="${item.image}" alt="${item.title}" />
+        //   <div class="card-content">
+        //     <div class="card-title">${item.title}</div>
+        //     <div class="card-desc">${item.description}</div>
+        //   </div>
+        // `;
+
+        //         grid.appendChild(card);
+        //     });
+        // }
+
+        // searchInput.addEventListener("input", () => {
+        //     const query = searchInput.value.toLowerCase();
+        //     const sorted = [...products].sort((a, b) => {
+        //         const aMatch = a.title.toLowerCase().includes(query);
+        //         const bMatch = b.title.toLowerCase().includes(query);
+        //         return bMatch - aMatch;
+        //     });
+        //     renderProducts(sorted);
+        // });
+        // renderProducts(products);
+       
         const grid = document.getElementById("productGrid");
-        const searchInput = document.getElementById("searchInput");
+    const searchInput = document.getElementById("searchInput");
 
-        function renderProducts(data) {
-            grid.innerHTML = "";
-            data.forEach(item => {
-                const card = document.createElement("div");
-                card.className = "card";
-                card.setAttribute("data-title", item.title.toLowerCase());
-                card.onclick = () => {
-                    window.location.href = item.link;
-                };
+    async function fetchProducts() {
+        try {
+            const response = await fetch("http://localhost:5000/api/products/");
 
-                card.innerHTML = `
-          <img src="${item.image}" alt="${item.title}" />
-          <div class="card-content">
-            <div class="card-title">${item.title}</div>
-            <div class="card-desc">${item.description}</div>
-          </div>
-        `;
+            console.log("Response status:", response.status);
 
-                grid.appendChild(card);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const products = await response.json();
+            console.log("Fetched products:", products);
+
+            renderProducts(products);
+
+            // Enable search filtering
+            searchInput.addEventListener("input", () => {
+                const query = searchInput.value.toLowerCase();
+                const filtered = products.filter(product =>
+                    product.title.toLowerCase().includes(query)
+                );
+
+                renderProducts(filtered);
             });
+
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        }
+    }
+
+    function renderProducts(data) {
+        grid.innerHTML = "";  // Clear existing cards
+
+        if (data.length === 0) {
+            grid.innerHTML = `<p>No products found.</p>`;
+            return;
         }
 
-        searchInput.addEventListener("input", () => {
-            const query = searchInput.value.toLowerCase();
-            const sorted = [...products].sort((a, b) => {
-                const aMatch = a.title.toLowerCase().includes(query);
-                const bMatch = b.title.toLowerCase().includes(query);
-                return bMatch - aMatch;
-            });
-            renderProducts(sorted);
-        });
-        renderProducts(products);
+        data.forEach(item => {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.setAttribute("data-title", item.title.toLowerCase());
 
+            card.onclick = () => {
+                if (item.link) {
+                    window.location.href = item.link;
+                } else {
+                    alert("No link available for this product.");
+                }
+            };
+
+            card.innerHTML = `
+                <img src="${item.imageUrl}" alt="${item.title}" onerror="this.src='fallback.jpg';" />
+                <div class="card-content">
+                    <div class="card-title">${item.title}</div>
+                    <div class="card-desc">${item.description}</div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // Start
+    fetchProducts();
+   
 
 
         // --------------------------------
 
-        function openModal(type) {
-            document.getElementById(type + 'Modal').style.display = 'flex';
-            if (type === 'login') {
-                document.getElementById('loginError').style.display = 'none';
-            }
-        }
+   let currentUser = null;
 
-        function closeModal(type) {
-            document.getElementById(type + 'Modal').style.display = 'none';
-        }
+  function openModal(id) {
+    document.getElementById(`${id}Modal`).style.display = "block";
+  }
 
-        const authButton = document.getElementById('authButton');
-        const profileIcon = document.getElementById('profileIcon');
-        const profilePopup = document.getElementById('profilePopup');
-        const profileName = document.getElementById('profileName');
-        const loginError = document.getElementById('loginError');
-        let currentUser = null;
+  function closeModal(id) {
+    document.getElementById(`${id}Modal`).style.display = "none";
+  }
 
-        function updateUI() {
-            if (currentUser) {
-                authButton.style.display = 'none';
-                profileIcon.style.display = 'inline-block';
-                profileName.textContent = currentUser.name;
-            } else {
-                authButton.style.display = 'inline-block';
-                profileIcon.style.display = 'none';
-                profilePopup.style.display = 'none';
-            }
-        }
+  function updateUI() {
+    const loginBtn = document.getElementById('authButton');
+    const profileBtn = document.getElementById('profileIcon');
+    const profileName = document.getElementById('profileName');
 
-        function loadUserFromLocalStorage() {
-            const storedUser = localStorage.getItem('loggedInUser');
-            if (storedUser) {
-                currentUser = JSON.parse(storedUser);
-            }
+    if (currentUser) {
+      loginBtn.style.display = 'none';
+      profileBtn.style.display = 'inline-block';
+      if (profileName) profileName.textContent = currentUser.name;
+    } else {
+      loginBtn.style.display = 'inline-block';
+      profileBtn.style.display = 'none';
+    }
+  }
+
+  function loadUserFromLocalStorage() {
+    const storedUser = localStorage.getItem('loggedInUser');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      loadUserProfile(user.email);
+    }
+  }
+
+  async function loadUserProfile(email) {
+    try {
+      const res = await fetch(`http://localhost:5000/api/users/profile/${email}`);
+      const data = await res.json();
+      if (res.ok) {
+        currentUser = { name: data.name, email: data.email };
+        localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
+        updateUI();
+      }
+    } catch (err) {
+      console.error('Failed to load profile', err);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Login handler
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+
+        try {
+          const res = await fetch('http://localhost:5000/api/users/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+          const user = await res.json();
+
+          if (res.ok) {
+            currentUser = { name: user.name, email: user.email };
+            localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
+            closeModal('login');
             updateUI();
+          } else {
+            document.getElementById('loginError').style.display = 'block';
+          }
+        } catch (error) {
+          alert('Login failed. Server error.');
         }
+      });
+    }
 
-        authButton.addEventListener('click', () => {
-            openModal('login');
-        });
+    // Signup handler
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm) {
+      signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('signupFullname').value;
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
 
-        profileIcon.addEventListener('click', (event) => {
-            event.stopPropagation();
-            if (profilePopup.style.display === 'block') {
-                profilePopup.style.display = 'none';
-            } else {
-                profilePopup.style.display = 'block';
-            }
-        });
+        try {
+          const res = await fetch('http://localhost:5000/api/users/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password })
+          });
+          const data = await res.json();
 
-        document.addEventListener('click', (event) => {
-            if (!profilePopup.contains(event.target) && event.target !== profileIcon) {
-                profilePopup.style.display = 'none';
-            }
-        });
-
-        document.getElementById('loginForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const email = document.getElementById('loginUsername').value;
-            const password = document.getElementById('loginPassword').value;
-
-            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-
-            const foundUser = registeredUsers.find(user => user.email === email && user.password === password);
-
-            if (foundUser) {
-                currentUser = { name: foundUser.fullName, email: foundUser.email };
-                localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
-                closeModal('login');
-                updateUI();
-                alert('Logged in successfully!');
-                loginError.style.display = 'none';
-            } else {
-                loginError.style.display = 'block';
-                document.getElementById('loginPassword').value = '';
-            }
-        });
-
-        document.getElementById('signupForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const fullName = document.getElementById('signupFullname').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-
-            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-
-            const userExists = registeredUsers.some(user => user.email === email);
-
-            if (userExists) {
-                alert('An account with this email already exists. Please login or use a different email.');
-                return;
-            }
-
-            const newUser = { fullName, email, password };
-            registeredUsers.push(newUser);
-
-            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-
-            currentUser = { name: fullName, email: email };
+          if (res.ok) {
+            alert('Signup successful!');
+            currentUser = { name, email };
             localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
             closeModal('signup');
             updateUI();
-            alert('Signed up and logged in successfully!');
-        });
-
-        function logout() {
-            currentUser = null;
-            localStorage.removeItem('loggedInUser');
-            updateUI();
-            alert('Logged out successfully!');
+          } else {
+            alert(data.message || 'Signup failed');
+          }
+        } catch (error) {
+          alert('Server error during signup');
         }
+      });
+    }
 
-        loadUserFromLocalStorage();
+    // Profile icon click toggle
+    const profileIcon = document.getElementById('profileIcon');
+    if (profileIcon) {
+      profileIcon.addEventListener('click', () => {
+        const popup = document.getElementById('profilePopup');
+        if (popup) {
+          popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+        }
+      });
+    }
+
+    // Logout button click
+    const profilePopup = document.getElementById('profilePopup');
+    if (profilePopup) {
+      const logoutBtn = profilePopup.querySelector('button');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+          localStorage.removeItem('loggedInUser');
+          currentUser = null;
+          updateUI();
+        });
+      }
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function (event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = "none";
+      }
+    };
+document.getElementById('authButton').addEventListener('click', () => {
+    openModal('login');
+});
+
+
+    // Load stored user on page load
+    loadUserFromLocalStorage();
+  });
+// Make sure DOM is ready
+window.onload = () => {
+  loadUserFromLocalStorage();
+
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", logout);
+  }
+};
+  function logout() {
+    // Clear user session
+    localStorage.removeItem('loggedInUser');
+    currentUser = null;
+    updateUI();
+    const profilePopup = document.getElementById("profilePopup");
+    if (profilePopup) {
+      profilePopup.style.display = "none";
+    }
+  }
+</script>
+
+
+
+
     </script>
 </body>
 
