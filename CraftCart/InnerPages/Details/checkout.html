@@ -208,12 +208,12 @@
       doc.setTextColor(80, 80, 80);
       doc.text(`Date: ${currentDate}`, 200, 20, { align: "right" });
 
-      // Line separator
+      
       doc.setDrawColor(124, 79, 32);
       doc.setLineWidth(0.5);
       doc.line(10, 25, 200, 25);
 
-      // Customer Details
+      
       doc.setFontSize(12);
       doc.setFont("helvetica", "bold");
       doc.setTextColor(124, 79, 32);
@@ -225,17 +225,17 @@
       doc.text(`Phone : ${phone}`, 20, 52);
       doc.text(`Address : ${address}`, 20, 59);
 
-      // Light background box
+      
       doc.setFillColor(255, 245, 230);
       doc.setDrawColor(124, 79, 32);
-      doc.rect(15, 70, 180, 55, "FD"); // Fill + border (first)
+      doc.rect(15, 70, 180, 55, "FD");  
 
-      // Heading
+      
       doc.setFont("helvetica", "bold");
       doc.setTextColor(124, 79, 32);
       doc.text("Order Summary", 20, 75);
 
-      // Order Details
+      
       doc.setFont("helvetica", "normal");
       doc.setTextColor(0, 0, 0);
       doc.text(`Product: Abhedabhava Radha Krishna`, 20, 85);
@@ -245,13 +245,13 @@
       doc.text(`Payment Method : ${paymentMethod === "upi" ? "UPI" : "Cash on Delivery"}`, 20, 113);
 
 
-      // Footer
+      
       doc.setFontSize(11);
       doc.setFont("helvetica", "italic");
       doc.setTextColor(124, 79, 32);
       doc.text("Thank you for shopping with CraftCart!", 105, 140, { align: "center" });
 
-      // Save
+      
       doc.save("invoice.pdf");
 
 

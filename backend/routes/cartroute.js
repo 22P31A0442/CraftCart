@@ -1,7 +1,7 @@
-// routes/CartRoutes.js
+
 const express = require('express');
 const router = express.Router();
-const Cart = require('../models/cartmodel'); // Assuming cartmodel.js is used for cart
+const Cart = require('../models/cartmodel'); 
 
 
 router.get('/:userId', async (req, res) => {
@@ -12,7 +12,7 @@ router.get('/:userId', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch cart' });
   }
 });
-// POST /api/cart
+
 router.post("/", async (req, res) => {
   const { id, title, price, image, userId } = req.body;
   try {
@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
     }
     const cartItem = new Cart({ id, title, price, image, userId });
     await cartItem.save();
-    res.json({ success: true, item: cartItem }); // ✅ Always return valid JSON
+    res.json({ success: true, item: cartItem }); 
   } catch (err) {
     console.error("Cart POST error:", err);
     res.status(500).json({ error: "Could not add to cart." });
@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
 });
 
 
-// Remove from cart
+
 router.delete('/:userId/:itemId', async (req, res) => {
   console.log("🔥 Delete route hit with:", req.params);
   try {

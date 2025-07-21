@@ -43,11 +43,11 @@
       font-size: 1em;
       font-weight: 600;
     }
-    .description { /* Added style for description */
+    .description { 
         font-size: 0.9em;
         color: #555;
         margin-top: 5px;
-        flex-grow: 1; /* Allows description to take available space */
+        flex-grow: 1; 
     }
   </style>
 </head>
@@ -75,7 +75,7 @@
 
         // Create image
         const img = document.createElement("img");
-        img.src = item.image || "placeholder.jpg"; // Use default if image missing
+        img.src = item.image || "placeholder.jpg"; 
         img.alt = item.title;
 
         // Title
@@ -99,7 +99,7 @@
         card.appendChild(price);
         card.appendChild(description);
 
-        // Append card to grid
+        
         favGrid.appendChild(card);
       });
     })

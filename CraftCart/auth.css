@@ -1,14 +1,14 @@
-/* auth.css */
+
 
 .auth-section {
     position: relative;
     display: flex;
     align-items: center;
-    margin-left: 20px; /* Adjust as needed for spacing */
+    margin-left: 20px; 
 }
 
 .auth-button-nav {
-    background-color: #e0b14a; /* A noticeable color for the button */
+    background-color: #e0b14a;
     color: white;
     padding: 8px 15px;
     border: none;
@@ -20,7 +20,7 @@
 }
 
 .auth-button-nav:hover {
-    background-color: #f4c95d; /* Lighter shade on hover */
+    background-color: #f4c95d; 
 }
 
 
@@ -32,28 +32,26 @@
 }
 
 .profile-icon:hover {
-    color: #e0b14a; /* Highlight on hover */
+    color: #e0b14a; 
 }
 .modal {
-    display: none; /* Keep this as the default hidden state */
+    display: none; 
     position: fixed;
     z-index: 100;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
-    /* REMOVE the duplicate 'display: flex;' from here.
-       The 'display: flex;' should only be applied by JavaScript when opening the modal. */
-    justify-content: center; /* These properties will apply when display is set to flex by JS */
-    align-items: center;    /* These properties will apply when display is set to flex by JS */
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
 }
 
 
 .modal-content {
     background-color: #fefefe;
-    margin: auto; /* Centers the content vertically and horizontally */
+    margin: auto;  
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
@@ -96,7 +94,7 @@ form label {
     text-align: left;
     color: #5b3a29;
     font-weight: bold;
-    margin-bottom: -10px; /* Pull label closer to input */
+    margin-bottom: -10px; 
 }
 
 form input[type="text"],
@@ -141,9 +139,9 @@ form input[type="email"] {
     text-decoration: underline;
 }
 
-/* Profile Popup Styling */
+
 .profile-popup {
-    display: none; /* Hidden by default */
+    display: none; 
     position: absolute;
     background-color: #fefefe;
     border: 1px solid #ddd;
@@ -151,8 +149,8 @@ form input[type="email"] {
     border-radius: 8px;
     padding: 30px 20px;
     right: 0; 
-    top: 60px; /* Adjust as needed to be below the icon/button */
-    z-index: 99; /* Below modals, above other content */
+    top: 60px;
+    z-index: 99;
     text-align: center;
     min-width: 200px;
 }
@@ -168,7 +166,7 @@ form input[type="email"] {
 }
 
 .profile-popup button {
-    background-color: #7c4f20; /* Red for logout */
+    background-color: #7c4f20; 
     color: white;
     padding: 10px 15px;
     border: none;

@@ -193,16 +193,11 @@ a {
   border-radius: 10px 10px 0 0;
 }
 
-.cardhead {
-  /* font-size: 1.5rem; */
-  color: #141414;
-  /* margin-top: 10px; */
+.cardhead { 
+  color: #141414; 
 }
 
-.cardpara {
-  /* font-size: 1rem; */
-  /* text-align: center; */
-  /* margin: 10px 20px; */
+.cardpara { 
   color: #555;
 }
 
@@ -210,80 +205,41 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  justify-content: center;
-  /* margin-top: auto; */
+  justify-content: center; 
 }
 
 .tag {
   background-color: #e0e0e0;
   padding: 5px 10px;
-  border-radius: 5px;
-  /* font-size: 0.9rem; */
+  border-radius: 5px; 
   color: #444;
 }
 
 
-/* ******************************* */
-/* * {
-    box-sizing: border-box;
-    } */
-
-    /* body {
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
-    } */
+/* ******************************* */ 
 
     .recomsPart {
       text-align: center;
       padding: 20px;
     }
-
-    /* .carouselWrapper {
-    width: 100%;
-    max-width: 800px;
-    margin: auto;
-    overflow: hidden;
-    padding: 0 10px;
-    position: relative;
-    } */
-    /* .carouselWrapper {
-  width: 80%;
-  max-width: none;
-  margin: auto;
-  overflow: hidden;
-  padding: 0 30px;
-  background-color: #555;
-} */
+ 
 
 .carouselWrapper {
   width: 80%;
   max-width: 1000px;
   margin: auto;
   overflow: hidden;
-  padding: 0; /* remove extra horizontal padding */
+  padding: 0; 
   background-color: transparent;
 }
 
 
     .carouselSlides {
       display: flex;
-      transition: transform 0.5s ease;
-      /* gap: 20px;
-      background-color: #555; */
+      transition: transform 0.5s ease; 
     }
 
-    /* .recomcard {
-      background-color: #FFFFFF;
-      width: 150px;
-      border-radius: 10px;
-      box-shadow: 2px 2px rgb(184, 182, 182);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex: 0 0 calc(33.333% - 20px);
-    } */
+  
 body{
   background-color: rgba(143, 81, 81, 0.225);
 }
@@ -292,11 +248,11 @@ body{
   color: white;
   width: 32%;
   min-width: 300px;
-  flex: 0 0 auto; /* prevent shrinking */
+  flex: 0 0 auto; 
   border-radius: 10px;
   box-shadow: 2px 2px rgb(184, 182, 182);
   padding: 20px;
-  margin-right: 20px; /* spacing between cards */
+  margin-right: 20px;  
 }
 
 * {
@@ -308,13 +264,11 @@ body{
     }
 
     .recomHead {
-      font-weight: bold;
-      /* color: #141414; */
+      font-weight: bold; 
     }
 
     .recompara {
-      text-align: center;
-      /* color: #555; */
+      text-align: center; 
     }
 
     .recomcon {
@@ -350,17 +304,7 @@ body{
       background-color: #f4c95d;
     }
 
-    /* @media (max-width: 768px) {
-      .recomcard {
-        flex: 0 0 calc(50% - 20px);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .recomcard {
-        flex: 0 0 calc(100% - 20px);
-      }
-    } */
+   
 
 @media (max-width: 768px) {
   .recomcard {
@@ -419,12 +363,12 @@ body{
   height: 30px;
   /* border: none; */
   background-color: #f6f5f3;
-  border-bottom: 1px solid transparent; /* initial invisible bottom border */
-  outline: none; /* remove default browser outline */
+  border-bottom: 1px solid transparent;  
+  outline: none; 
   transition: border-color 0.3s ease;
 }
 .inputt:focus {
-  border: 2px solid #7c4f20; /* visible only on focus */
+  border: 2px solid #7c4f20;  
 }
     .buttonsend{
       width: 150px;
@@ -594,8 +538,7 @@ body{
   color: #e0b14a;
 }
 .head2{
-  font-size: 20px;
-  /* font-family: Copperplate, Papyrus, fantasy; */
+  font-size: 20px; 
 }
 
 
@@ -711,8 +654,7 @@ body{
         text-align: center;
       color: #5b3a29;
       margin-bottom: 10px;
-      font-size: 1.2em;
-      /* letter-spacing: 1px; */
+      font-size: 1.2em; 
     }
     .toast {
   visibility: hidden;
@@ -732,11 +674,11 @@ body{
 }
 
 .toast-success {
-  background-color: #4BB543; /* green */
+  background-color: #4BB543;  
 }
 
 .toast-error {
-  background-color: #E74C3C; /* red */
+  background-color: #E74C3C;  
 }
 
 .toast.show {

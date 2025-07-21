@@ -1,9 +1,9 @@
-// routes/favoriteRoutes.js
+
 const express = require('express');
 const router = express.Router();
 const Favorite = require('../models/favmodel');
 
-// Add to favorites
+
 router.get('/:userId', async (req, res) => {
   try {
     const favorites = await Favorite.find({ userId: req.params.userId });
@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
     try {
         const { id, title, price, image, userId } = req.body;
 
-        // Check if this item already exists for this user
+        
         const existing = await Favorite.findOne({ id, userId });
         if (existing) return res.status(200).json({ message: "Already exists" });
 
@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Remove from favorites
+
 router.delete('/:userId/:itemId', async (req, res) => {
   try {
     await Favorite.deleteOne({ userId: req.params.userId, id: req.params.itemId });

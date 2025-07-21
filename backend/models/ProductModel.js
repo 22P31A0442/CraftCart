@@ -1,4 +1,4 @@
-// models/ProductModel.js
+
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
@@ -8,5 +8,5 @@ const productSchema = new mongoose.Schema({
   link: String,
 });
 
-// Pass the collection name as the third argument
+
 module.exports = mongoose.model('Product', productSchema, 'products');

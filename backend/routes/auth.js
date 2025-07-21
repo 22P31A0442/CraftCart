@@ -1,9 +1,9 @@
-// routes/auth.js
+
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 
-// Signup Route
+
 router.post('/signup', async (req, res) => {
   const { fullName, email, password } = req.body;
   try {
@@ -18,7 +18,7 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// Login Route
+
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {

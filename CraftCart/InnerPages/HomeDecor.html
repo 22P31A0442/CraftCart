@@ -125,7 +125,7 @@
         color: white;
       }
 
-      /* New style for Remove from Cart button */
+      
       .remove-from-cart-button {
         background-color: #dc3545;
       }
@@ -171,12 +171,12 @@
         transform: scale(1.1);
       }
 
-      /* Active state for top icons */
+      
       .top-icon.active {
-        background-color: #7c4f20; /* Highlight color */
+        background-color: #7c4f20; 
         border-radius: 50%;
         padding: 1px;
-        transform: scale(1.1); /* Keep slightly scaled for emphasis */
+        transform: scale(1.1);
       }
 
       .cart-count {
@@ -193,7 +193,7 @@
         pointer-events: none;
       }
 
-      /* Added style for the "Show All Products" button */
+      
       #showAllProductsBtn {
         padding: 8px 15px;
         background-color: #7c4f20;
@@ -472,7 +472,7 @@
       }
 
       function filterAndSort() {
-        let filteredData = [...homedecor]; // Don't mutate original data
+        let filteredData = [...homedecor]; 
 
         const query = searchInput.value.toLowerCase();
         if (query) {
@@ -488,7 +488,7 @@
           filteredData.sort((a, b) => b.price - a.price);
         }
 
-        // 🔥 Use your same function to render — no changes to card logic
+        
         renderProducts(filteredData);
       }
 

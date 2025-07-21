@@ -410,9 +410,7 @@
         </div>
     </div>
 
-    <script>
-        // localStorage.setItem("userId", response.user._id);
-        // Existing JavaScript for Carousel
+    <script> 
         const slides = document.querySelector('.carouselSlides');
         const cards = document.querySelectorAll('.recomcard');
         const dotsContainer = document.querySelector('.carouselDots');
@@ -451,81 +449,7 @@
 
         showSlide(currentIndex);
 
-        // ----------------------------------
-        // const products = [
-        //     {
-        //         title: "HomeDecor",
-        //         description: "Antique lamps, pots, and traditional decor pieces crafted with elegance.",
-        //         image: "https://www.artisanscrest.in/cdn/shop/products/kerala-lamp-bell-metal-handmade-07_grande.jpg?v=1487056753",
-        //         link: "InnerPages/HomeDecor.html"
-        //     },
-        //     {
-        //         title: "Sculpture",
-        //         description: "Detailed sculptures of deities and historical figures in stone and bronze.",
-        //         image: "https://www.artisanscrest.in/cdn/shop/products/acibwssbam-13_grande.jpg?v=1570268395",
-        //         link: "InnerPages/Sculpture.html"
-        //     },
-        //     {
-        //         title: "WoodCraft",
-        //         description: "Intricate woodwork showcasing ancient Indian carving skills.",
-        //         image: "https://www.artisanscrest.in/cdn/shop/products/acdtbwrkpf-08_grande.jpg?v=1634713029",
-        //         link: "InnerPages/WoodCraft.html"
-        //     },
-        //     {
-        //         title: "Painting",
-        //         description: "Mythological stories and folk tales depicted in traditional styles.",
-        //         image: "https://www.artisanscrest.in/cdn/shop/products/04dancingKrishna_grande.jpg?v=1512624844",
-        //         link: "InnerPages/Painting.html"
-        //     },
-        //     {
-        //         title: "TribalArt",
-        //         description: "Vibrant and raw expressions of tribal culture and art forms.",
-        //         image: "https://www.artisanscrest.in/cdn/shop/products/IMG_6920_grande.jpg?v=1518497977",
-        //         link: "InnerPages/TribalArt.html"
-        //     },
-        //     {
-        //         title: "Handloom",
-        //         description: "Richly woven fabrics and patterns preserving heritage weaves.",
-        //         image: "https://www.artisanscrest.in/cdn/shop/products/acgptcshgb-87_grande.jpg?v=1487681961",
-        //         link: "InnerPages/Handloom.html"
-        //     }
-        // ];
-
-        // const grid = document.getElementById("productGrid");
-        // const searchInput = document.getElementById("searchInput");
-
-        // function renderProducts(data) {
-        //     grid.innerHTML = "";
-        //     data.forEach(item => {
-        //         const card = document.createElement("div");
-        //         card.className = "card";
-        //         card.setAttribute("data-title", item.title.toLowerCase());
-        //         card.onclick = () => {
-        //             window.location.href = item.link;
-        //         };
-
-        //         card.innerHTML = `
-        //   <img src="${item.image}" alt="${item.title}" />
-        //   <div class="card-content">
-        //     <div class="card-title">${item.title}</div>
-        //     <div class="card-desc">${item.description}</div>
-        //   </div>
-        // `;
-
-        //         grid.appendChild(card);
-        //     });
-        // }
-
-        // searchInput.addEventListener("input", () => {
-        //     const query = searchInput.value.toLowerCase();
-        //     const sorted = [...products].sort((a, b) => {
-        //         const aMatch = a.title.toLowerCase().includes(query);
-        //         const bMatch = b.title.toLowerCase().includes(query);
-        //         return bMatch - aMatch;
-        //     });
-        //     renderProducts(sorted);
-        // });
-        // renderProducts(products);
+       
        
         const grid = document.getElementById("productGrid");
     const searchInput = document.getElementById("searchInput");
@@ -545,8 +469,7 @@
 
             renderProducts(products);
 
-            // Enable search filtering
-            searchInput.addEventListener("input", () => {
+             searchInput.addEventListener("input", () => {
                 const query = searchInput.value.toLowerCase();
                 const filtered = products.filter(product =>
                     product.title.toLowerCase().includes(query)
@@ -561,7 +484,7 @@
     }
 
     function renderProducts(data) {
-        grid.innerHTML = "";  // Clear existing cards
+        grid.innerHTML = "";  
 
         if (data.length === 0) {
             grid.innerHTML = `<p>No products found.</p>`;
@@ -592,8 +515,7 @@
         });
     }
 
-    // Start
-    fetchProducts();
+     fetchProducts();
    
 
 
@@ -647,8 +569,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    // Login handler
-    const loginForm = document.getElementById('loginForm');
+     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
       loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -677,8 +598,7 @@
       });
     }
 
-    // Signup handler
-    const signupForm = document.getElementById('signupForm');
+     const signupForm = document.getElementById('signupForm');
     if (signupForm) {
       signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -709,8 +629,7 @@
       });
     }
 
-    // Profile icon click toggle
-    const profileIcon = document.getElementById('profileIcon');
+     const profileIcon = document.getElementById('profileIcon');
     if (profileIcon) {
       profileIcon.addEventListener('click', () => {
         const popup = document.getElementById('profilePopup');
@@ -720,8 +639,7 @@
       });
     }
 
-    // Logout button click
-    const profilePopup = document.getElementById('profilePopup');
+     const profilePopup = document.getElementById('profilePopup');
     if (profilePopup) {
       const logoutBtn = profilePopup.querySelector('button');
       if (logoutBtn) {
@@ -733,8 +651,7 @@
       }
     }
 
-    // Close modal when clicking outside
-    window.onclick = function (event) {
+     window.onclick = function (event) {
       if (event.target.classList.contains('modal')) {
         event.target.style.display = "none";
       }
@@ -744,11 +661,9 @@ document.getElementById('authButton').addEventListener('click', () => {
 });
 
 
-    // Load stored user on page load
-    loadUserFromLocalStorage();
+     loadUserFromLocalStorage();
   });
-// Make sure DOM is ready
-window.onload = () => {
+ window.onload = () => {
   loadUserFromLocalStorage();
 
   const logoutBtn = document.getElementById("logoutBtn");
@@ -757,8 +672,7 @@ window.onload = () => {
   }
 };
   function logout() {
-    // Clear user session
-    localStorage.removeItem('loggedInUser');
+     localStorage.removeItem('loggedInUser');
     currentUser = null;
     updateUI();
     const profilePopup = document.getElementById("profilePopup");
@@ -771,18 +685,15 @@ window.onload = () => {
             const toast = document.getElementById("toast");
             toast.textContent = message;
 
-            // Remove any existing color classes
-            toast.classList.remove("toast-success", "toast-error");
+             toast.classList.remove("toast-success", "toast-error");
 
-            // Add appropriate color class
-            if (type === "success") {
+             if (type === "success") {
                 toast.classList.add("toast-success");
             } else {
                 toast.classList.add("toast-error");
             }
 
-            // Show the toast
-            toast.classList.add("show");
+             toast.classList.add("show");
 
             setTimeout(() => {
                 toast.classList.remove("show");
@@ -810,8 +721,7 @@ window.onload = () => {
 
                 if (res.ok) {
                     showToast("Message sent successfully ✅", "success");
-                    // Clear form
-                    document.getElementById("name").value = "";
+                     document.getElementById("name").value = "";
                     document.getElementById("email").value = "";
                     document.getElementById("subject").value = "";
                     document.getElementById("message").value = "";
