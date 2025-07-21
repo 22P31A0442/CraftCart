@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up | CraftCart</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #eadcdc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 30px 25px;
+      border-radius: 15px;
+      width: 360px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-top: 4px solid #7c4f20;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #5b3a29;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      font-size: 15px;
+      border: 1px solid #7c4f20;
+      background-color: #f6f5f3;
+      color: #333;
+    }
+
+    input:focus {
+      outline: none;
+      border: 2px solid #e0b14a;
+    }
+
+    button {
+      background-color: #7c4f20;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #e0b14a;
+      color: black;
+    }
+
+    .toggle-text {
+      position: absolute;
+      right: 10px;
+      top: 13px;
+      cursor: pointer;
+      color: #7c4f20;
+      font-size: 14px;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    #status {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .error { color: red; }
+    .success { color: green; }
+
+    #passwordCard {
+      display: none;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .login-link a {
+      color: #7c4f20;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sign Up</h2>
+
+    <input type="text" id="name" placeholder="Full Name" required />
+    <input type="email" id="email" placeholder="Email Address" required />
+    <input type="text" id="mobile" placeholder="Mobile Number" required />
+    <button onclick="checkEmailAndSendOTP()">Send OTP</button>
+
+    <input type="text" id="otp" placeholder="Enter OTP" style="display:none;">
+    <button id="verifyBtn" onclick="verifyOTP()" style="display:none;">Verify OTP</button>
+
+    <div id="passwordCard">
+      <div class="password-wrapper">
+        <input type="password" id="newPassword" placeholder="New Password" />
+        <span class="toggle-text" onclick="togglePassword('newPassword', this)">Show</span>
+      </div>
+      <div class="password-wrapper">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" />
+        <span class="toggle-text" onclick="togglePassword('confirmPassword', this)">Show</span>
+      </div>
+      <button onclick="setPassword()">Set Password</button>
+    </div>
+
+    <div id="status"></div>
+
+    <div class="login-link">
+      <p>Already registered? <a href="login.html">Login here</a></p>
+    </div>
+  </div>
+
+  <script>
+    const statusDiv = document.getElementById("status");
+
+    async function checkEmailAndSendOTP() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+
+      if (!name || !email) {
+        statusDiv.textContent = "❗ Enter full name and email.";
+        statusDiv.className = "error";
+        return;
+      }
+
+      // ✅ Fix: removed extra comma here
+      const checkRes = await fetch("http://localhost:3000/check-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
+
+      const checkData = await checkRes.json();
+      if (checkData.exists) {
+        statusDiv.textContent = "❌ Email already exists. Try logging in.";
+        statusDiv.className = "error";
+        return;
+      }
+
+      statusDiv.textContent = "⏳ Sending OTP...";
+      statusDiv.className = "";
+
+      const otpRes = await fetch("http://localhost:3000/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, contact: email })
+      });
+
+      const otpData = await otpRes.json();
+      if (otpData.success) {
+        statusDiv.textContent = "✅ OTP sent!";
+        statusDiv.className = "success";
+        document.getElementById("otp").style.display = "block";
+        document.getElementById("verifyBtn").style.display = "block";
+      } else {
+        statusDiv.textContent = "❌ " + (otpData.message || "Failed to send OTP.");
+        statusDiv.className = "error";
+      }
+    }
+
+    async function verifyOTP() {
+      const email = document.getElementById("email").value.trim();
+      const otp = document.getElementById("otp").value.trim();
+
+      if (!otp) {
+        statusDiv.textContent = "❗ Enter OTP.";
+        statusDiv.className = "error";
+        return;
+      }
+
+      const res = await fetch("http://localhost:3000/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contact: email, otp })
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        statusDiv.textContent = "✅ OTP Verified.";
+        statusDiv.className = "success";
+        document.getElementById("passwordCard").style.display = "block";
+        document.getElementById("otp").style.display = "none";
+        document.getElementById("verifyBtn").style.display = "none";
+      } else {
+        statusDiv.textContent = "❌ Invalid OTP.";
+        statusDiv.className = "error";
+      }
+    }
+
+    async function setPassword() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const newPass = document.getElementById("newPassword").value.trim();
+      const confirmPass = document.getElementById("confirmPassword").value.trim();
+
+      if (!newPass || !confirmPass) {
+        statusDiv.textContent = "❗ Fill both password fields.";
+        statusDiv.className = "error";
+        return;
+      }
+
+      if (newPass !== confirmPass) {
+        statusDiv.textContent = "❌ Passwords do not match.";
+        statusDiv.className = "error";
+        return;
+      }
+
+      const res = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, mobile, password: newPass })
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        statusDiv.textContent = "✅ Account created! Redirecting to login...";
+        statusDiv.className = "success";
+        setTimeout(() => window.location.href = "login.html", 2000);
+      } else {
+        statusDiv.textContent = "❌ " + (data.message || "Error creating account.");
+        statusDiv.className = "error";
+      }
+    }
+
+    function togglePassword(id, toggle) {
+      const input = document.getElementById(id);
+      if (input.type === "password") {
+        input.type = "text";
+        toggle.textContent = "Hide";
+      } else {
+        input.type = "password";
+        toggle.textContent = "Show";
+      }
+    }
+  </script>
+</body>
+</html>
