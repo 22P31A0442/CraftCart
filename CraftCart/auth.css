@@ -149,8 +149,8 @@ form input[type="email"] {
     border: 1px solid #ddd;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 8px;
-    padding: 20px;
-    right: 0; /* Position relative to its parent .auth-section */
+    padding: 30px 20px;
+    right: 0; 
     top: 60px; /* Adjust as needed to be below the icon/button */
     z-index: 99; /* Below modals, above other content */
     text-align: center;
@@ -168,7 +168,7 @@ form input[type="email"] {
 }
 
 .profile-popup button {
-    background-color: #dc3545; /* Red for logout */
+    background-color: #7c4f20; /* Red for logout */
     color: white;
     padding: 10px 15px;
     border: none;
@@ -178,5 +178,20 @@ form input[type="email"] {
 }
 
 .profile-popup button:hover {
-    background-color: #c82333;
+    background-color: #e0b14a;
+}
+.profile-link{
+    color: #7c4f20;
+    text-decoration: none;
+    font-weight: bold;
+}
+.profile-link:hover {
+    /* background-color: #7c4f20; */
+    color: #e0b14a;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease
+
 }

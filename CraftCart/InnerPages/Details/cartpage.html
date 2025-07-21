@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Cart</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background-color: #fef4e8;
+    }
+    h2 {
+      color: #7c4f20;
+    }
+    .grid {
+      display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex; 
+      flex-direction: column; 
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px; 
+    }
+    .title {
+      font-weight: bold;
+      margin-top: 10px;
+      font-size: 1.1em;
+      color: #333;
+    }
+    .price {
+      color: green;
+      margin-bottom: 10px;
+      font-size: 1em;
+      font-weight: 600;
+    }
+    .description { /* Added style for description */
+        font-size: 0.9em;
+        color: #555;
+        margin-top: 5px;
+        flex-grow: 1; /* Allows description to take available space */
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🛒 My Carts</h2>
+  <div class="grid" id="favGrid"></div>
+
+  <script>
+  const userId = localStorage.getItem("userId");
+
+  fetch(`http://localhost:5000/api/cart/${userId}`)
+    .then(res => res.json())
+    .then(data => {
+      const favGrid = document.getElementById("favGrid");
+
+      if (data.length === 0) {
+        favGrid.innerHTML = "<p>No cart found.</p>";
+        return;
+      }
+
+      data.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        // Create image
+        const img = document.createElement("img");
+        img.src = item.image || "placeholder.jpg"; // Use default if image missing
+        img.alt = item.title;
+
+        // Title
+        const title = document.createElement("div");
+        title.className = "title";
+        title.textContent = item.title;
+
+        // Price
+        const price = document.createElement("div");
+        price.className = "price";
+        price.textContent = `₹${item.price}`;
+
+        // Description
+        const description = document.createElement("div");
+        description.className = "description";
+        description.textContent = item.description || "No description available.";
+
+        // Append to card
+        card.appendChild(img);
+        card.appendChild(title);
+        card.appendChild(price);
+        card.appendChild(description);
+
+        // Append card to grid
+        favGrid.appendChild(card);
+      });
+    })
+    .catch(err => {
+      console.error("Error fetching cart", err);
+      document.getElementById("favGrid").innerHTML = "<p>Something went wrong.</p>";
+    });
+</script>
+
+
+
+</body>
+</html>

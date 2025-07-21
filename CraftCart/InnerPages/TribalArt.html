@@ -5,282 +5,278 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tribal Art Collection</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 30px;
-            background-color: #f1e5c6;
-        }
+<style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 30px;
+        background-color: #f1e5c6;
+      }
 
-        h1 {
-            text-align: center;
-            color: #7c4f20;
-            margin-bottom: 20px;
-        }
+      h1 {
+        text-align: center;
+        color: #7c4f20;
+        margin-bottom: 20px;
+      }
 
+      .controls {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        align-items: center;
+      }
+
+      .search-sort {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      input[type="text"],
+      select {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        position: relative;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: 0.3s ease;
+        cursor: pointer;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card img {
+        width: 100%;
+        height: 380px;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .card-body {
+        padding: 15px;
+      }
+
+      .card-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #333;
+      }
+
+      .card-price {
+        color: green;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+
+      .card-buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 0px;
+        /* margin-top: 15px; */
+      }
+
+      .card-button {
+        padding: 8px 12px;
+        background-color: #7c4f20;
+        font-weight: bolder;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        flex-grow: 1;
+        text-align: center;
+        white-space: nowrap;
+        margin-bottom: 10px;
+        /* margin: 0px 10px; */
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-top: -15px;
+      }
+
+      .card-button:hover {
+        background-color: #f7b016;
+        color: black;
+        font-weight: bolder;
+      }
+
+      .add-to-cart-button {
+        background-color: #7c4f20;
+      }
+
+      .add-to-cart-button:hover {
+        background-color: #f7b016;
+        color: white;
+      }
+
+      /* New style for Remove from Cart button */
+      .remove-from-cart-button {
+        background-color: #dc3545;
+      }
+
+      .remove-from-cart-button:hover {
+        background-color: #c82333;
+        color: white;
+      }
+
+      .card-fav {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 34px;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 2;
+        transition: color 0.3s;
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+      }
+
+      .card-fav.fav {
+        color: red;
+      }
+
+      .top-icons {
+        display: flex;
+        gap: 15px;
+        font-size: 28px;
+        color: #7c4f20;
+      }
+
+      .top-icon {
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        position: relative;
+      }
+
+      .top-icon:hover {
+        transform: scale(1.1);
+      }
+
+      /* Active state for top icons */
+      .top-icon.active {
+        background-color: #7c4f20; /* Highlight color */
+        border-radius: 50%;
+        padding: 1px;
+        transform: scale(1.1); /* Keep slightly scaled for emphasis */
+      }
+
+      .cart-count {
+        position: absolute;
+        top: -5px;
+        right: -10px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 7px;
+        font-size: 14px;
+        line-height: 1;
+        font-weight: bold;
+        pointer-events: none;
+      }
+
+      /* Added style for the "Show All Products" button */
+      #showAllProductsBtn {
+        padding: 8px 15px;
+        background-color: #7c4f20;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-left: 20px;
+        display: none;
+        white-space: nowrap;
+      }
+
+      #showAllProductsBtn:hover {
+        background-color: #f7b016;
+        color: black;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
         .controls {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-            align-items: center; /* Align items vertically */
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
         }
 
         .search-sort {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+          width: 100%;
+          justify-content: space-between;
         }
 
-        input[type="text"],
-        select {
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-size: 14px;
+        .search-sort input,
+        .search-sort select {
+          flex-grow: 1;
         }
 
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            position: relative;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            transition: 0.3s ease;
-            cursor: pointer;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card img {
-            width: 100%;
-            height: 380px;
-            object-fit: cover;
-            object-position: center;
-        }
-
-        .card-body {
-            padding: 15px;
-        }
-
-        .card-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #333;
-        }
-
-        .card-price {
-            color: green;
-            font-size: 14px;
-            margin-bottom: 10px;
+        .top-icons {
+          width: 100%;
+          justify-content: flex-end;
         }
 
         .card-buttons {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            margin-top: 15px;
+          flex-direction: column;
         }
 
-        .card-button {
-            padding: 8px 12px;
-            background-color: #7c4f20;
-            font-weight: bolder;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            flex-grow: 1;
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        .card-button:hover {
-            background-color: #f7b016;
-            color: black;
-            font-weight: bolder;
-        }
-
-        /* Styles for Add to Cart and Remove from Cart buttons */
-        .add-to-cart-button {
-            background-color: #7c4f20;
-        }
-
-        .add-to-cart-button:hover {
-            background-color: #f7b016;
-            color: white;
-        }
-
-        .remove-from-cart-button {
-            background-color: #dc3545; /* Red color for remove */
-        }
-
-        .remove-from-cart-button:hover {
-            background-color: #c82333;
-            color: white;
-        }
-
-        .card-fav {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 34px; /* Adjusted size for better appearance */
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 2;
-            transition: color 0.3s;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow for visibility */
-        }
-
-        .card-fav.fav {
-            color: red;
-        }
-
-        /* Top icons for Favorites and Cart */
-        .top-icons {
-            display: flex;
-            gap: 15px;
-            font-size: 28px;
-            color: #7c4f20;
-        }
-
-        .top-icon {
-            cursor: pointer;
-            transition: transform 0.2s ease;
-            position: relative; /* For cart count positioning */
-        }
-
-        .top-icon:hover {
-            transform: scale(1.1);
-        }
-
-        .top-icon.active {
-            background-color: #7c4f20; /* Highlight color */
-            border-radius: 50%;
-            padding: 1px;
-            transform: scale(1.1); /* Keep slightly scaled for emphasis */
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -5px;
-            right: -10px;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 2px 7px;
-            font-size: 14px;
-            line-height: 1;
-            font-weight: bold;
-            pointer-events: none; /* Allows clicks to pass through to the icon */
-        }
-
-        /* Style for the "Show All Products" button */
         #showAllProductsBtn {
-            padding: 8px 15px;
-            background-color: #7c4f20;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-left: 20px;
-            display: none; /* Hidden by default, shown when in favorite/cart view */
-            white-space: nowrap;
+          margin-left: 0;
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 15px;
         }
 
-        #showAllProductsBtn:hover {
-            background-color: #f7b016;
-            color: black;
+        .product-grid {
+          grid-template-columns: 1fr;
         }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .controls {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-
-            .search-sort {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .search-sort input,
-            .search-sort select {
-                flex-grow: 1;
-            }
-
-            .top-icons {
-                width: 100%;
-                justify-content: flex-end;
-            }
-
-            .card-buttons {
-                flex-direction: column;
-            }
-
-            #showAllProductsBtn {
-                margin-left: 0;
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 15px;
-            }
-
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+      }
     </style>
 </head>
 
 <body>
 
-    <h1>Tribal Art Collection</h1>
+   <h1>Tribal Art Collection</h1>
 
     <div class="controls">
         <div class="search-sort">
-            <input type="text" id="searchInput" placeholder="Search tribal art..." />
+            <input type="text" id="searchInput" placeholder="Search TribalArt items..." />
             <select id="sortSelect">
                 <option value="">Sort By</option>
                 <option value="priceLow">Price: Low to High</option>
                 <option value="priceHigh">Price: High to Low</option>
             </select>
         </div>
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <div class="top-icons">
-                <span class="top-icon" id="favIcon" onclick="toggleFavoritesView()">❤️</span>
-                <span class="top-icon" id="cartIcon" onclick="toggleCartView()">
-                    🛒
-                    <span class="cart-count" id="cartCount">0</span>
-                </span>
-            </div>
-            <button id="showAllProductsBtn" onclick="showAllProducts()">Show All Products</button>
-        </div>
+
     </div>
 
     <div class="product-grid" id="productGrid"></div>
 
-    <script>
-        const tribalItems = [
+   <script>
+    const tribalItems = [
             {
                 id: "tribal1",
                 title: "Aaratrika: A Lamp",
@@ -318,242 +314,193 @@
                 image: "https://www.artisanscrest.in/cdn/shop/products/IMG_6921_grande.jpg?v=1518497924"
             }
         ];
-
+    const grid = document.getElementById("productGrid");
+      const searchInput = document.getElementById("searchInput");
+      const sortSelect = document.getElementById("sortSelect");
+      function renderProducts(data = tribalItems) {
         const grid = document.getElementById("productGrid");
-        const searchInput = document.getElementById("searchInput");
-        const sortSelect = document.getElementById("sortSelect");
-        const favIcon = document.getElementById("favIcon");
-        const cartIcon = document.getElementById("cartIcon");
-        const cartCount = document.getElementById("cartCount");
-        const showAllProductsBtn = document.getElementById("showAllProductsBtn");
+        grid.innerHTML = "";
 
-        let showFavoritesOnly = false;
-        let showCartItemsOnly = false;
+        data.forEach((product) => {
+          const card = document.createElement("div");
+          card.className = "card";
 
-        // --- Local Storage Helpers ---
-        function getFavorites() {
-            return JSON.parse(localStorage.getItem("tribalFavorites")) || [];
-        }
+          const heart = document.createElement("span");
+          heart.className = "card-fav";
+          heart.innerHTML = "♡";
+          heart.onclick = () => toggleFavorite(product, heart);
 
-        function saveFavorites(favs) {
-            localStorage.setItem("tribalFavorites", JSON.stringify(favs));
-        }
+          const cartBtn = document.createElement("button");
+          cartBtn.className = "card-button add-to-cart-button";
+          cartBtn.innerText = "Add to Cart";
+          cartBtn.onclick = () => toggleCart(product, cartBtn);
 
-        function getCartItems() {
-            return JSON.parse(localStorage.getItem("tribalCart")) || [];
-        }
+          const detailsBtn = document.createElement("button");
+          detailsBtn.className = "card-button";
+          detailsBtn.innerText = "View Details";
+          detailsBtn.onclick = () => viewDetails(product.id);
 
-        function saveCartItems(cart) {
-            localStorage.setItem("tribalCart", JSON.stringify(cart));
-            updateCartCount();
-        }
+          card.innerHTML = `
+      <img src="${product.image}" alt="${product.title}" />
+      <div class="card-body">
+          <div class="card-title">${product.title}</div>
+          <div class="card-price">₹${product.price}</div>
+      </div>
+    `;
 
-        // --- Cart Functionality ---
-        function addToCart(id, event) {
-            event.stopPropagation();
-            let cart = getCartItems();
-            if (!cart.includes(id)) {
-                cart.push(id);
-                saveCartItems(cart);
-                alert(`"${tribalItems.find(item => item.id === id).title}" added to cart!`);
-                filterAndSort(); // Re-render to update button state
-            } else {
-                alert(`"${tribalItems.find(item => item.id === id).title}" is already in your cart.`);
-            }
-        }
+          const buttonContainer = document.createElement("div");
+          buttonContainer.className = "card-buttons";
+          buttonContainer.appendChild(detailsBtn);
+          buttonContainer.appendChild(cartBtn);
 
-        function removeFromCart(id, event) {
-            event.stopPropagation();
-            let cart = getCartItems();
-            cart = cart.filter(itemId => itemId !== id);
-            saveCartItems(cart);
-            alert(`"${tribalItems.find(item => item.id === id).title}" removed from cart.`);
-            filterAndSort(); // Re-render to show the item removed
-        }
-
-        function updateCartCount() {
-            const cart = getCartItems();
-            cartCount.textContent = cart.length;
-            cartCount.style.display = cart.length > 0 ? 'inline-block' : 'none';
-        }
-
-        // --- Favorite Functionality ---
-        window.toggleFavorite = function (id, element) {
-            let favs = getFavorites();
-            if (favs.includes(id)) {
-                favs = favs.filter(itemId => itemId !== id);
-                element.classList.remove('fav');
-                element.innerHTML = '♡';
-            } else {
-                favs.push(id);
-                element.classList.add('fav');
-                element.innerHTML = '♥';
-            }
-            saveFavorites(favs);
-            filterAndSort(); // Re-render to update the view
-        };
-
-        // --- Global Reset / Show All Function ---
-        function showAllProducts() {
-            showFavoritesOnly = false;
-            showCartItemsOnly = false;
-            favIcon.classList.remove("active"); // Remove active class from fav icon
-            cartIcon.classList.remove("active"); // Remove active class from cart icon
-            showAllProductsBtn.style.display = 'none'; // Hide the "Show All Products" button
-            searchInput.value = '';
-            sortSelect.value = '';
-            searchInput.disabled = false; // Re-enable for showing all products
-            sortSelect.disabled = false;  // Re-enable for showing all products
-            filterAndSort(); // This will now render all products
-        }
-
-        // --- View Toggling Functions ---
-        function toggleCartView() {
-            if (showCartItemsOnly) {
-                // If cart view is currently active, clicking again should show all products
-                showAllProducts();
-            } else {
-                // Activate cart view
-                showCartItemsOnly = true;
-                cartIcon.classList.add("active"); // Highlight cart icon
-                // Deactivate favorites view
-                showFavoritesOnly = false;
-                favIcon.classList.remove("active"); // Remove highlight from fav icon
-
-                searchInput.value = '';
-                sortSelect.value = '';
-                searchInput.disabled = false;
-                sortSelect.disabled = false;
-                filterAndSort();
-            }
-        }
-
-        function toggleFavoritesView() {
-            if (showFavoritesOnly) {
-                // If favorites view is currently active, clicking again should show all products
-                showAllProducts();
-            } else {
-                // Activate favorites view
-                showFavoritesOnly = true;
-                favIcon.classList.add("active"); // Highlight fav icon
-                // Deactivate cart view
-                showCartItemsOnly = false;
-                cartIcon.classList.remove("active"); // Remove highlight from cart icon
-
-                searchInput.value = '';
-                sortSelect.value = '';
-                searchInput.disabled = false;
-                sortSelect.disabled = false;
-                filterAndSort();
-            }
-        }
-
-        function render(data) {
-            grid.innerHTML = "";
-            const favorites = getFavorites();
-            const cartItems = getCartItems();
-
-            // Manage visibility of "Show All Products" button based on active view
-            if (showFavoritesOnly || showCartItemsOnly) {
-                showAllProductsBtn.style.display = 'inline-block';
-            } else {
-                showAllProductsBtn.style.display = 'none';
-            }
-
-            if (data.length === 0) {
-                let message = "No items found matching your criteria.";
-                if (showFavoritesOnly) {
-                    message = "You haven't marked any items as favorites yet.";
-                } else if (showCartItemsOnly) {
-                    message = "Your cart is empty.";
-                }
-                grid.innerHTML = `<p style="text-align: center; color: #555; margin-top: 50px;">${message}</p>`;
-                return;
-            }
-
-            data.forEach(item => {
-                const isFav = favorites.includes(item.id);
-                const isInCart = cartItems.includes(item.id);
-
-                const card = document.createElement("div");
-                card.className = "card";
-
-                card.innerHTML = `
-                    <div class="card-fav ${isFav ? 'fav' : ''}" onclick="event.stopPropagation(); toggleFavorite('${item.id}', this)">
-                        ${isFav ? '♥' : '♡'}
-                    </div>
-                    <img src="${item.image}" alt="${item.title}" />
-                    <div class="card-body">
-                        <div class="card-title">${item.title}</div>
-                        <div class="card-price">₹${item.price.toLocaleString()}</div>
-                        <div class="card-buttons">
-                            <button class="card-button" onclick="event.stopPropagation(); viewDetails('${item.id}')">View Details</button>
-                            ${isInCart ?
-                                `<button class="card-button remove-from-cart-button" onclick="removeFromCart('${item.id}', event)">Remove from Cart</button>` :
-                                `<button class="card-button add-to-cart-button" onclick="addToCart('${item.id}', event)">Add to Cart</button>`
-                            }
-                        </div>
-                    </div>
-                `;
-
-                card.onclick = (event) => {
-                    // Prevent card click from triggering viewDetails if a button or fav icon was clicked
-                    if (!event.target.closest('.card-fav') && !event.target.closest('.card-button')) {
-                        viewDetails(item.id);
-                    }
-                };
-
-                grid.appendChild(card);
-            });
-        }
-
-        function viewDetails(itemId) {
-            // Placeholder for your item-detail page. Make sure this path is correct.
-            window.location.href = `Details/item-detail.html?itemId=${itemId}`;
-        }
-
-        function filterAndSort() {
-            let currentData = [...tribalItems]; // Start with a copy of all items
-
-            // 1. Filter based on active view (Favorites or Cart)
-            if (showFavoritesOnly) {
-                const favorites = getFavorites();
-                currentData = currentData.filter(item => favorites.includes(item.id));
-            } else if (showCartItemsOnly) {
-                const cartItems = getCartItems();
-                currentData = currentData.filter(item => cartItems.includes(item.id));
-            }
-
-            // 2. Apply search to the *already filtered* data
-            const query = searchInput.value.toLowerCase();
-            if (query) {
-                currentData = currentData.filter(i => i.title.toLowerCase().includes(query));
-            }
-
-            // 3. Apply sort to the *already filtered and searched* data
-            const sort = sortSelect.value;
-            if (sort) {
-                if (sort === "priceLow") {
-                    currentData.sort((a, b) => a.price - b.price);
-                } else if (sort === "priceHigh") {
-                    currentData.sort((a, b) => b.price - a.price);
-                }
-            }
-
-            // Finally, render the processed data
-            render(currentData);
-        }
-
-        // Event Listeners
-        searchInput.addEventListener("input", filterAndSort);
-        sortSelect.addEventListener("change", filterAndSort);
-
-        // Initial setup on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            updateCartCount();
-            filterAndSort(); // Use filterAndSort for initial render to handle states
+          card.appendChild(heart);
+          card.appendChild(buttonContainer);
+          grid.appendChild(card);
         });
-    </script>
+      }
+
+      function updateFavoriteIcon(element, isFavorite) {
+        element.classList.toggle("fav", isFavorite);
+        element.innerHTML = isFavorite ? "♥" : "♡";
+      }
+
+      function toggleFavorite(product, iconElement) {
+        const isNowFav = !iconElement.classList.contains("fav");
+        updateFavoriteIcon(iconElement, isNowFav);
+
+        if (isNowFav) {
+          sendFavoriteToBackend(product);
+        } else {
+          removeFavoriteFromBackend(product.id);
+        }
+      }
+
+      function sendFavoriteToBackend(product) {
+        const userId = localStorage.getItem("userId");
+
+        if (!userId) {
+          alert("Please log in to save favorites.");
+          return;
+        }
+
+        fetch("http://localhost:5000/api/favorites", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            image: product.image,
+            userId,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log("✅ Saved to MongoDB:", data))
+          .catch((err) => console.error("❌ Save error:", err));
+      }
+
+      function removeFavoriteFromBackend(productId) {
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+          alert("Please log in to remove favorites.");
+          return;
+        }
+
+        fetch(`http://localhost:5000/api/favorites/${userId}/${productId}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => console.log("❌ Removed from MongoDB:", data))
+          .catch((err) => console.error("❌ Remove error:", err));
+      }
+
+      function toggleCart(product, buttonElement) {
+        const isAdding = buttonElement.innerText === "Add to Cart";
+        if (isAdding) {
+          addToCartBackend(product);
+          buttonElement.innerText = "Remove from Cart";
+          buttonElement.classList.add("remove-from-cart-button");
+          buttonElement.classList.remove("add-to-cart-button");
+        } else {
+          removeFromCartBackend(product.id);
+          buttonElement.innerText = "Add to Cart";
+          buttonElement.classList.add("add-to-cart-button");
+          buttonElement.classList.remove("remove-from-cart-button");
+        }
+      }
+
+      function addToCartBackend(product) {
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+          alert("Please log in to add to cart.");
+          return;
+        }
+
+        fetch("http://localhost:5000/api/cart", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            image: product.image,
+            userId,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log("✅ Added to cart:", data))
+          .catch((err) => console.error("❌ Cart add error:", err));
+      }
+      function removeFromCartBackend(productId) {
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+          alert("Please log in to remove Cart.");
+          return;
+        }
+
+        fetch(`http://localhost:5000/api/cart/${userId}/${productId}`, {
+  method: "DELETE",
+})
+  .then((res) => res.json())
+  .then((data) => console.log("❌ Removed from cart:", data))
+  .catch((err) => console.error("❌ Remove error:", err));
+      }
+
+      function viewDetails(itemId) {
+        window.location.href = `Details/item-detail.html?itemId=${itemId}`;
+      }
+
+      function filterAndSort() {
+        let filteredData = [...tribalItems]; // Don't mutate original data
+
+        const query = searchInput.value.toLowerCase();
+        if (query) {
+          filteredData = filteredData.filter((product) =>
+            product.title.toLowerCase().includes(query)
+          );
+        }
+
+        const sortOption = sortSelect.value;
+        if (sortOption === "priceLow") {
+          filteredData.sort((a, b) => a.price - b.price);
+        } else if (sortOption === "priceHigh") {
+          filteredData.sort((a, b) => b.price - a.price);
+        }
+
+        // 🔥 Use your same function to render — no changes to card logic
+        renderProducts(filteredData);
+      }
+
+      renderProducts();
+      searchInput.addEventListener("input", filterAndSort);
+      sortSelect.addEventListener("change", filterAndSort);
+
+</script>
+
+
+
+
+
 </body>
 
 </html>

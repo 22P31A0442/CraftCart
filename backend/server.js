@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const User = require('./models/User');
 const productRoute = require('./routes/productRoute'); 
+const favoriteRoutes = require('./routes/favroute');
+const cartRoutes = require('./routes/cartroute');
 
 // === Replace dotenv and use hardcoded values ===
 const MONGO_URI = "mongodb+srv://tanujamallipamu:0371X5wqzX3jr26F@cluster0.fhign.mongodb.net/CardCraft";
@@ -13,7 +15,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/api/products/', productRoute);
-
+app.use('/api/favorites', favoriteRoutes);
+app.use('/api/cart', cartRoutes);
 // === MongoDB Connection ===
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
