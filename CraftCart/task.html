@@ -287,20 +287,23 @@
 
 
     <div class="contact" id="contact">
-
-        <div class="leftPart">
+<div class="leftPart">
             <h1>Leave ME Your info</h1>
-            <div class="leftbox">
-                <label for="">Your Full Name(Required)</label>
-                <input type="text" class="inputt">
-                <label for="">Your Email (Required)</label>
-                <input type="text" class="inputt">
+            <form id="contactForm" class="leftbox">
+                <label>Your Full Name (Required)</label>
+                <input type="text" id="name" class="inputt" required>
+
+                <label>Your Email (Required)</label>
+                <input type="email" id="email" class="inputt" required>
+
                 <label>Subject</label>
-                <input type="text" class="inputt">
+                <input type="text" id="subject" class="inputt">
+
                 <label>Your Message</label>
-                <textarea name="" id="" class="inputt" style="height: 150px;"></textarea>
-                <button class="buttonsend">Send Message</button>
-            </div>
+                <textarea id="message" class="inputt" style="height: 150px;"></textarea>
+
+                <button type="submit" class="buttonsend">Send Message</button>
+            </form>
         </div>
         <div class="rightpart">
             <h1>Contact information</h1>
@@ -408,6 +411,7 @@
     </div>
 
     <script>
+        // localStorage.setItem("userId", response.user._id);
         // Existing JavaScript for Carousel
         const slides = document.querySelector('.carouselSlides');
         const cards = document.querySelectorAll('.recomcard');
@@ -762,12 +766,66 @@ window.onload = () => {
       profilePopup.style.display = "none";
     }
   }
+  //-----------------------------CONTACT FORM SCRIPT------------------------------------------ 
+        function showToast(message, type = "success") {
+            const toast = document.getElementById("toast");
+            toast.textContent = message;
+
+            // Remove any existing color classes
+            toast.classList.remove("toast-success", "toast-error");
+
+            // Add appropriate color class
+            if (type === "success") {
+                toast.classList.add("toast-success");
+            } else {
+                toast.classList.add("toast-error");
+            }
+
+            // Show the toast
+            toast.classList.add("show");
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000);
+        }
+
+        document.querySelector(".buttonsend").addEventListener("click", async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const subject = document.getElementById("subject").value;
+            const message = document.getElementById("message").value;
+
+            const data = { name, email, subject, message };
+
+            try {
+                const res = await fetch("http://localhost:5000/api/contact", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (res.ok) {
+                    showToast("Message sent successfully ✅", "success");
+                    // Clear form
+                    document.getElementById("name").value = "";
+                    document.getElementById("email").value = "";
+                    document.getElementById("subject").value = "";
+                    document.getElementById("message").value = "";
+                } else {
+                    showToast("Something went wrong ❌", "error");
+                }
+            } catch (err) {
+                console.error(err);
+                showToast("Error while sending ❌", "error");
+            }
+        });
+//----------------------------end of contact form script-----------------------------------------------
 </script>
-
-
-
-
-    </script>
+<div id="toast" class="toast">Message sent successfully ✅</div>
 </body>
 
 </html>

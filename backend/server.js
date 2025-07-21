@@ -5,19 +5,21 @@ const User = require('./models/User');
 const productRoute = require('./routes/productRoute'); 
 const favoriteRoutes = require('./routes/favroute');
 const cartRoutes = require('./routes/cartroute');
+const Contact = require('./models/ContactModel');
 
-// === Replace dotenv and use hardcoded values ===
+
 const MONGO_URI = "mongodb+srv://tanujamallipamu:0371X5wqzX3jr26F@cluster0.fhign.mongodb.net/CardCraft";
 const PORT = 5000;
 
-// === Express App ===
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/api/products/', productRoute);
 app.use('/api/favorites', favoriteRoutes);
 app.use('/api/cart', cartRoutes);
-// === MongoDB Connection ===
+
+
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -27,7 +29,7 @@ mongoose.connect(MONGO_URI, {
   console.error("❌ MongoDB connection error:", err);
 });
 
-// === Auth Routes ===
+
 app.post('/api/users/signup', async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -68,5 +70,18 @@ app.get('/api/users/profile/:email', async (req, res) => {
   }
 });
 
-// === Start Server ===
+app.post('/api/contact', async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body;
+
+    const newContact = new Contact({ name, email, subject, message });
+    await newContact.save();
+
+    res.status(201).json({ message: "✅ Message Sent successfully!" });
+  } catch (err) {
+    console.error("❌ Error saving contact:", err);
+    res.status(500).json({ message: "Server error while saving contact" });
+  }
+});
+
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));

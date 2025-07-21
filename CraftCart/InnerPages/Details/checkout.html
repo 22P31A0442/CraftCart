@@ -2,478 +2,262 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkout</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            /* background-color: rgb(251, 220, 155); */
-            background-color: #7c4f20;
-        }
+  <meta charset="UTF-8" />
+  <title>Payment Page</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f1e5c6;
+    }
 
-        .checkout-container {
-            max-width: 600px;
-            margin: auto;
-            /* background-color: #7c4f20; */
-            background-color: rgb(251, 220, 155);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            text-align: center;
-            /* Center-aligns all content inside */
-        }
+    h1 {
+      text-align: center;
+      color: #7c4f20;
+    }
 
-        img {
-            max-width: 100%;
-            height: 250px;
-            border-radius: 10px;
-            object-fit: cover;
-            display: block;
-            margin: 0 auto 20px auto;
-            /* Center image and add spacing below */
-        }
+    h2 {
+      margin-top: 30px;
+      color: #7c4f20;
+    }
 
-        h2 {
-            margin-top: 0;
-            font-size: 28px;
-            color: #2c2c2c;
-        }
+    .product-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 15px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
 
-        .price {
-            color: #b12704;
-            font-size: 24px;
-            margin: 15px 0;
-            font-weight: 700;
-        }
+    .product-card img {
+      width: 150px;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 10px;
+    }
 
-        p {
-            font-size: 16px;
-            line-height: 1.5;
-            color: #333;
-        }
+    .counter {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        .btn {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
-            font-weight: bolder;
-        }
+    .counter button {
+      padding: 5px 10px;
+      font-size: 18px;
+    }
 
-        .btn:hover {
-            background-color: #218838;
-        }
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #9d9c9c;
+    }
 
-        .btn1 {
-            background-color: #f4c95d;
-            color: black;
-            border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
-            font-weight: bolder;
-        }
+    .section {
+      background: white;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    }
 
-        .btn1:hover {
-            background-color: #e0b14a;
-        }
+    input[type="radio"] {
+      accent-color: #7c4f20;
+    }
 
-        #checkoutDetails input,
-        #checkoutDetails textarea,
-        #checkoutDetails select {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
 
-        #checkoutDetails .btn,
-        #checkoutDetails .btn1 {
-            padding: 10px 20px;
-            margin-right: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .section input:focus,
+    .section textarea:focus {
+      border: 2px solid #7c4f20;
+      outline: none;
+      color: #7c4f20;
+    }
 
-        .form-group-inline {
-            display: flex;
-            /* Makes the children (label and input) flex items */
-            align-items: center;
-            /* Vertically aligns label and input in the middle */
-            margin-bottom: 20px;
-            /* Adds space between each row of form elements */
-            gap: 15px;
-            /* Adds space between the label and the input */
-        }
 
-        .form-group-inline label {
-            flex-shrink: 0;
-            /* Prevents the label from shrinking on smaller screens */
-            width: 120px;
-            /* Give labels a fixed width for alignment (adjust as needed) */
-            text-align: right;
-            /* Align label text to the right */
-            padding-right: 10px;
-            /* Add some padding between label text and input */
-            margin-bottom: 0;
-            /* Remove default bottom margin from label */
-        }
+    .qr {
+      display: none;
+      margin-top: 15px;
+    }
 
-        .form-group-inline input[type="text"],
-        .form-group-inline input[type="email"],
-        .form-group-inline input[type="tel"],
-        .form-group-inline textarea,
-        .form-group-inline select {
-            flex-grow: 1;
-            /* Allows the input field to take up remaining space */
-            width: auto;
-            /* Override default width to allow flex-grow to work */
-            margin: 0;
-            /* Remove default margins from input fields */
-        }
+    button#confirmBtn {
+      margin-top: 20px;
+      background-color: #20a725;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bolder;
+      cursor: pointer;
+    }
 
-        .style1 img {
-            width: 100%;
-            /* Make image fill container width */
-            height: 200px;
-            /* Give container a fixed height */
-            object-fit: cover;
-            }
-    </style>
+    #totalAmount {
+      font-weight: bold;
+      font-size: 20px;
+      color: #333;
+    }
 
+    .qtyb {
+      background-color: #f5d8b9;
+      cursor: pointer;
+      border: 1px solid #785734;
+    }
+  </style>
 </head>
 
 <body>
 
-    <div class="checkout-container" id="checkoutDetails">
-        <!-- JS will load product here -->
+  <h1>CHECKOUT</h1>
+
+  <div class="product-card">
+    <img
+      src="https://www.artisanscrest.in/cdn/shop/products/sculpture-greenstone-statue-radha-krishna-34_grande.jpeg?v=1487657372"
+      alt="Product" />
+    <div>
+      <h3>Abhedabhava Radha Krishna</h3>
+      <p>Price: ₹13,500</p>
+      <div class="counter">
+        <span>Qty: </span>
+        <button onclick="updateQuantity(-1)" class="qtyb">-</button>
+        <span id="quantity">1</span>
+        <button onclick="updateQuantity(1)" class="qtyb">+</button>
+      </div>
     </div>
+  </div>
 
-    <script>
-        const productData = {
-            home1: {
-                title: "Abhedabhava:Krishna Playing Flute with Radha by His Side",
-                description: " Radha and Krishna even after being separated remain united in soul, spirit and in the consciousness of millions of followers.The love of Radha and Krishna is the blissful form of divine regality, an ocean of unlimited divine bliss. Krishna is referred as the “poornatam purushottam brahma” or the supreme personality of the god. Thus all the forms of god reside within Krishna, where all the forms are absolute and divinely one. This green stone carved sculpture in all its magnificence potrays the divine bonding of radha and krishna in Gokul.",
-                image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-greenstone-statue-radha-krishna-34_grande.jpeg?v=1487657372",
-                price: 13500
-            },
-            home2: {
-                title: "Chaturbhuj: One Who Has Four Arms",
-                price: 27500,
-                image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-redstone-statue-ganesha-32_grande.jpeg?v=1487657525",
-                description: "Carved out of red stone with all its fine details, this 15” tall statue is testimony to a rare artisanship of the distant past that has been kept alive by a group of extremley skilled artisans.Ganesha or the elephant god is worshiped world over as the destroyer of evil and bestower of prosperity.Suggested Placement: This sculpture in all its glory can be entrenched in the puja room or in the living room.Note: This can also be custom made i.e hand sculpted over a specific time frameArtist : Rabi Sahoo",
-            },
-            home3: {
-                title: "Abhirupa: The Beautiful Lady Musician",
-                price: 3069,
-                image: "https://www.artisanscrest.in/cdn/shop/products/actmsslpmi-84_grande.jpg?v=1488439779",
-                description: "In ancient times, the kings were the biggest and most generous patrons of art and culture. Their patronage allowed traditional artists and craftsmen to flourish and the grateful artisans immortalized their courts in the form of beautiful and exquisite works of art. This intricately carved wooden sculpture captures a skilled woman musician in the midst of playing a beautiful melody on her string instrument to entertain the king and his court. The adroit craftsmanship captures the grandness of her outfit, complete with precious stones and the look of intense concentration as she focuses on entertaining the rapturous audience through her craft.",
-            },
-            home4: {
-                title: "Deepasthambham Plain",
-                price: 54500,
-                image: "https://www.artisanscrest.in/cdn/shop/products/kerala-lamp-bell-metal-handmade-04_grande.jpg?v=1487056259",
-                description: "The Deepasthambham Vilakku (the Malayalam word for lamp) is a representation of the ornate traditional lamps which are found in temples across India.Cast in bell metal, this handcrafted multi-layered structure is designed to house many wicks in one lamp. Each lamp is handmade in the Kerala Tradition by experts and can take about 30 days to complete.This ornate piece of work is ideal for puja rooms, but can also be placed in the hall to highlight the Indian tradition of lighting lamps for every occasion.This handcrafted artifact is custom-made and is priced according to the size and your requirements. Get in touch with us to purchase this piece of Kerala history for your home.",
-            },
-            home5: {
-                title: "Padmanabha: The Supreme God",
-                price: 6000,
-                image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-redstone-statue-narayan-09_grande.jpeg?v=1487658607",
-                description: "Narayan or Vishnu, the Supreme Being is the resting form of energy, the active form of Lord Naryana is called Vishnu, the preserver of the universe. The Lord is called Padmanabha as his navel is of the shape of a lotus flower and it is believed that the creator of the universe Lord Brahma was originated from the lotus navel of Narayana, the Supreme Being. This red stone sculpture depicts the lord on Sesha Naga. Shesh“ in Sanskrit and many Indian languages means “that which remains means snake, and snake symbolises energy in Hinduism.So when these two words shesha+naga are put together, it means, that which remains, ultimately, is Energy or Atman",
-            },
-            home6: {
-                title: "Samavaaya: The Perpetual Co-Inherence",
-                price: 6500,
-                image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-redstone-statue-radha-krishna-02_grande.jpeg?v=1487658742",
-                description: "Radha and Krishana even after being separated is considered to have remained united in soul, spirit and in the consciousness of millions of followers. The love of Radha and Krishna is the blissful form of divine regality, an ocean of unlimited divine bliss in perpetual co-inherence otherwise known as Samavaaya in sanskrit. Krishna is referred as the “poornatam purushottam brahma” or the supreme personality of the god. Thus all the forms of god reside within Krishna, where all the forms are absolute and divinely one. This red stone carved sculpture in all its magnificence portrays the divine bonding of Radha and Krishna in Gokul. The natural splendor and opulence captured with such finesses is a testimony to a form of artistic brilliance.",
-            },
+  <div class="section">
+    <h2>Total Cost</h2>
+    <p id="totalAmount">₹13,500</p>
+  </div>
 
+  <div class="section">
+    <h2>Choose Payment Method</h2>
+    <label><input type="radio" name="payment" value="cod" checked onchange="toggleQR()"> Cash on Delivery</label><br>
+    <label><input type="radio" name="payment" value="upi" onchange="toggleQR()"> UPI Payment</label>
 
+    <div class="qr" id="qrCode">
+      <p>Scan this QR Code to Pay:</p>
+      <img
+        src="data:image/png;base64,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"
+        width="150">
+    </div>
+  </div>
 
-            //WOOD CRAFT
-            wood1: {
-                title: "Gita Saar: The Essence of Existence",
-                image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-wood-statue-krishna-arjuna-35_grande.jpg?v=1472896140",
-                price: 26500,
-                description: "This portrait depicts the conversation between Lord Krishna and Arjuna at the beginning of the great Mahabharat war. Krishna defines the duties of a Karam-Yogi to Arjuna who was reluctant to fight the battle against his own clan.Note: In all its detail this can be custom made i.e. hand crafted exclusively for you in a size of your choice to suit your needs."
-            },
-            wood2: {
-                title: "Abhaya Mudra: The Gesture of Re-assurance",
-                image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-wood-statue-buddha-40_grande.jpg?v=1472639693",
-                price: 57000,
-                description: "The different poses of Buddha are called asanas. When standing, the hand is generally shown raised in a blessing gesture primarily conveying reassurance and in Sanskrit, it is called the Abhaya mudra. The abhaya mudra symbolizes protection, peace and dispelling of fear (Abhaya in Sanskrit). As per Buddhist texts, the lord had made this gesture upon attaining enlightenment. This was also the gesture made by the god while being attacked by an angry elephant and managing to calm it down. The gesture is made with the right hand raised to shoulder height, arm bent, and palm facing outward. The gesture demonstrates that the hand is empty of weapons and thus indicates friendship and peace. When the right hand is in the abhaya mudra, the left hand usually hangs loosely at the side of the body or makes the varada mudra, or gift-giving gesture.Note: In all its grandeur this can be custom made i.e. hand crafted exclusively for you in a size of your choice to suit your needs."
-            },
-            wood3: {
-                title: "Ananda-Swarupa: Embodiment of Supreme Bliss",
-                image: "https://www.artisanscrest.in/cdn/shop/products/acdtbwrkpf-08_grande.jpg?v=1634713029",
-                price: 72000,
-                description: "Celebrate the eternal love of Shri Krishna and Devi Radha by installing this exquisite sculpture at your home. Made of Beechwood, it depicts the duo blissfully lost in the music as a cow joins them. Each detail has been carefully carved by the artisan to bring out the true beauty of this sculpture.Note: In all its grandeur this can be custom made i.e., hand crafted exclusively for you in a size of your choice to suit your needs.Dimensions: 36"
-            },
-            wood4: {
-                title: "Banvihari: Lord who Loves Roaming in Forest",
-                image: "https://www.artisanscrest.in/cdn/shop/products/acdtbwlkwc-08_grande.jpg?v=1634713474",
-                price: 66000,
-                description: "Born to Devaki and Vasudeva and raised by Yashoda and Nanda, Lord Krishna is the beloved of everyone in Gokul and Vrindavan. He was a mischievous kid who often roamed the forests with his elder brother Balaram and friends. He would also break into the houses of Gopis and steal butter. However, this never enraged anyone. In fact, the more mischief he did, the more adored he was. Hence, it is said that placing an idol of Lord Krishna at your house immediately makes the place more vibrant and cheerful with the Lord's good vibes."
-            },
-            wood5: {
-                title: "Dvidanta: The Elephant",
-                image: "https://www.artisanscrest.in/cdn/shop/products/ackbwwelrt-01_grande.jpg?v=1488438323",
-                price: 4500,
-                description: "Elephant represents real strength and power. The mightiest of Indian kingdoms in the historical past always had built upon their military prowess around elephants. Indra, the king of the gods, rode a celestial elephant named Airavat into battle and the elephant was said to exude an aura of power and formidability which was unmatched by others. This exquisite wooden sculpture captures the raw power and majesty of the elephant while the skillful hands of the master craftsman make the elephants deafening trumpet come alive through the raised trunk. This exquisite sculpture exudes majesty and grandeur and makes a perfect addition to your living room decor."
-            },
-            wood6: {
-                title: "Lord Balaji: Lord of the Universe",
-                image: "https://www.artisanscrest.in/cdn/shop/products/acdtbwlbop-36_grande.jpg?v=1634713425",
-                price: 57000,
-                description: "Lord Balaji is said to be an incarnation of Lord Vishnu and one of the most powerful gods of all times. As the bestower of boons and as the Lord who fulfils wishes, he is immensely worshipped and his abode on earth- Tirupati, widely visited. Bring home an idol of Lord Balaji today to spread the positive vibes and keep your house well protected from evil.Note: In all its grandeur this can be custom made i.e., hand crafted exclusively for you in a size of your choice to suit your needs."
-            },
+  <div class="section">
+    <h2>Delivery Details</h2>
+    <input type="text" id="name" placeholder="Full Name" required />
+    <input type="tel" id="phone" placeholder="Phone Number" required />
+    <textarea id="address" placeholder="Delivery Address" rows="4" required></textarea>
+  </div>
+
+  <button id="confirmBtn" onclick="generateInvoice()">Confirm Order</button>
+
+  <script>
+    let quantity = 1;
+    const pricePerItem = 13500;
+
+    function updateQuantity(change) {
+      quantity = Math.max(1, quantity + change);
+      document.getElementById("quantity").innerText = quantity;
+      document.getElementById("totalAmount").innerText = `₹${quantity * pricePerItem}`;
+    }
+
+    function toggleQR() {
+      const qr = document.getElementById("qrCode");
+      const selected = document.querySelector('input[name="payment"]:checked').value;
+      qr.style.display = selected === "upi" ? "block" : "none";
+    }
+
+    function generateInvoice() {
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const address = document.getElementById("address").value;
+      const total = quantity * pricePerItem;
+      const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+
+      if (!name || !phone || !address) {
+        alert("Please fill in all delivery details.");
+        return;
+      }
 
 
+      //------------------------INVOICE PDF---------------------------------------------
 
-            //SCULPTURE PAGE
-            sculpture1: {
-                title: "Abhaya Mudra: Gesture of Reassurance",
-                price: 5600,
-                image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-metal-stone-statue-buddha-20_grande.jpg?v=1467792803",
-                description: "The abhaya mudra symbolizes protection, peace and dispelling of fear (Abhaya in Sanskrit). As per Buddhist texts, the lord had made this gesture upon attaining enlightenment. This was also the gesture made by the god while being attacked by an angry elephant and managing to calm it down. The gesture is made with the right hand raised to shoulder height, arm bent, and palm facing outward. The gesture demonstrates that the hand is empty of weapons and thus indicates friendship and peace. When the right hand is in the abhaya mudra, the left hand usually hangs loosely at the side of the body or makes the varada mudra, or gift-giving gesture."
-            },
-            sculpture2: {
-                title: "Abhasa: Reflection of Consciousness",
-                price: 21500,
-                image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-metal-statue-buddha-abhasa-27_jpg_grande.jpg?v=1496378477",
-                description: "The journey of the lord from being the crown prince siddhrtha gautam to gautam buddha the enlightend one, was about a path to self discovery. This brass-stone sculpture beautifully captures the Lord in a relaxed posture reflecting on the consciousness of the soul.Note: In all its detail this can be custom made and hand crafted exclusively in a size of your choice to suit your exclusive needs."
-            },
-            sculpture3: {
-                title: "Abhaya Mudra: Gesture of Reassurance",
-                price: 12500,
-                image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-metal-statue-buddha-26_grande.jpg?v=1467793426",
-                description: "The abhaya mudra symbolizes protection, peace and dispelling of fear (Abhaya in Sanskrit). As per Buddhist texts, the lord had made this gesture upon attaining enlightenment. This was also the gesture made by the god while being attacked by an angry elephant and managing to calm it down. The gesture is made with the right hand raised to shoulder height, arm bent, and palm facing outward. The gesture demonstrates that the hand is empty of weapons and thus indicates friendship and peace. When the right hand is in the abhaya mudra, the left hand usually hangs loosely at the side of the body or makes the varada mudra, or gift-giving gesture."
-            },
-            sculpture4: {
-                title: "Anubandha: Inseparable in Spirit",
-                price: 96000,
-                image: "https://www.artisanscrest.in/cdn/shop/products/2017-04-17-PHOTO-00000039-48x23x13_grande.jpg?v=1495175135",
-                description: "While Krishna is known as the supreme God in Hindu epics, he is also revered for his fun loving side, best expressed during his childhood in Gokul. The stories of Krishna's mischevous antics and pranks form the base for most of the epics paying tribute to him. This exquisite sculpture depicts Lord Krishna as the delightful charming child, charming everyone around him and mesmerizing them with the beautiful music he composed on his flute. The master sculptor's skill and attention to detail is evident in the carving around the face and the peaceful expression of Krishna as he is lost in the music that he has created. The sculpture makes the music come alive and you can hear the notes as they waft through the woods of Gokul."
-            },
-            sculpture5: {
-                title: "Buddhadeva: Lord Buddha in Bhumisparsha Mudra",
-                price: 315000,
-                image: "https://www.artisanscrest.in/cdn/shop/products/IMG_20210824_grande.jpg?v=1646038123",
-                description: "It is said that after years of meditation, when Lord Buddha attained eternal wisdom and elightenment, he requested mother earth (Bhumi) to bear witness to the occurring. The right hand which is placed upon the right knee is complemented by the left hand that is held flat in the lap in the dhyana mudra of meditation, symbolising the union of method and wisdom. Bring home this blackstone sculpture of the Lord today to fill your space with positive vibrations.Note: In all its grandeur this can be custom made i.e., hand crafted exclusively for you in a size of your choice to suit your needs."
-            },
-            sculpture6: {
-                title: "Chiranjeevani: The Immortal",
-                price: 30500,
-                image: "https://www.artisanscrest.in/cdn/shop/products/sculpture-metal-stone-statue-hanuman-12_grande.jpg?v=1467361498",
-                description: "Hanuman or Vayuputra is the greatest symbol of valour, energy, intelligence, prowess, character, charm, discernment, composure, dexterity, vigor, and fortitude. It is believed as long as the name of Lord Ram remains in this world, Hanumanji will live in this world as well. This sclupture with natural finish is testimony to a rare artisanship of the distant past that has been kept alive by a group of extremley skilled artisans.Note: In all its detail this can be custom made and hand crafted exclusively in a size of your choice to suit your exclusive needs."
-            },
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
 
+      const currentDate = new Date().toLocaleDateString();
 
-            //PAINTING DETAILS
-            paint1: {
-                title: "Avaneesh : Ganesha Standing with Sevikas",
-                price: 2450,
-                image: "https://www.artisanscrest.in/cdn/shop/products/pattachitra-painting-handmade-ganesha-41_grande.jpeg?v=1486709530",
-                description: "Avaneesh:Lord of the world. This pattachitra depicts the destroyer of obstacles, lord Ganesha with sevikas.In Sanskrit,Pattachitra literally means cloth painting; 'pata' (cloth), and 'chitra' (painting). This form of art work was first conceptualized in Orissa and dates back to the 5th century. According to historical evidence, the first forms of Patachitra art originated in the village of Puri, where this art work is still quite popular. The artists who practiced this craft were known as Mohapatras or Maharanas, The astounding temples and architecture in Orissa is what lent its inspiration to all these creative craftsman who narrated pictorial stories through their paintings and detailed work.Note: In all its detail this can be custom made and hand crafted exclusively in a size of your choice to suit your exclusive needs."
-            },
-            paint2: {
-                title: "Abhati: The One Who Shines",
-                price: 34500,
-                image: "https://www.artisanscrest.in/cdn/shop/products/pattachitra-painting-tussar-silk-handmade-mahaveer-jain-01_grande.jpeg?v=1486723698",
-                description: "This painting in its grandeur depicts the life of Mahaveer Jain, the twenty fourth Tirthankara of the Jain traidition. Though Mahaveer was born in a royal family but had left all worldly possession to be a monk at the age of 30. Tirthankaras are the ones who were born as human beings but have attained enlightenment through sacrifice, meditation and self realization. Mahaveer Jain's pursuit of the ultimate truth, knowledge and bliss had continued for 12 long years and his ultimate realization is known as the Keval-Jnana.Pattachitra painters, who make paintings over a piece of cloth known as Patta or a dried palm leaf, specialize in this unique art-form since generations. "
-            },
-            paint3: {
-                title: "Akshaya Vata: The Eternal Banyan Tree",
-                price: 17500,
-                image: "https://www.artisanscrest.in/cdn/shop/products/pattachitra-painting-handmade-tree-of-life-01_grande.jpg?v=1486712295",
-                description: "It is believed that during the cyclic destruction of creation when the whole earth was enveloped with water, Akshaya Vrata remained unaffected. It is on the leaves of this tree that Lord Krishna rested in the form of a baby when land was no longer visible. And it is here that the immortal sage, Markandeya, received the cosmic vision of the Lord. It is under this tree that Buddha meditates eternally. Legend also has it that the Bodi tree at Gaya is a manifestation of this tree. Dimension 36 inches x 24 inches.Pattachitra painters, who make paintings over a piece of cloth known as Patta or a dried palm leaf, specialize in this unique art-form since generations. Raghurajpur a heritage crafts village in Puri district, Odisha is famous for this ancient craft-works which at least date back to 5 BC. A mixture of chalk and gum is used in unique proportion to create this beautiful piece."
-            },
-            paint4: {
-                title: "Annapoorneshwari: The Goddess who Feeds One and All",
-                price: 120000,
-                image: "https://www.artisanscrest.in/cdn/shop/products/02annapoorneswari_grande.jpg?v=1512624722",
-                description: "Annapoorna Devi or Annapoorneshwari is considered to be an avatar of goddess Parvati, wife of Lord Shiva. It is said that a long time ago, Devi Parvati was offended by Lord Shiva's remark that everything materialistic including food is Maya. To prove the importance of sustenance, the Goddess disappeared from the world and as a result, nature came to a standstill. However, she could not see the plight of her devotees and reappeared in Kashi. Lord Shiva, realising his mistake, rushed to her and begged for alms. This Kerala Mural depicts goddess Annapoorna in her resplendent glory after returning to Kashi, serving food to her devotees. This painting can be an excellent adornment to the abundance that flows through your dining room."
-            },
-            paint5: {
-                title: "Brajamohan: The attractive God from Braj",
-                price: 27000,
-                image: "https://www.artisanscrest.in/cdn/shop/products/acsmpclkpf-14_grande.jpg?v=1626162338",
-                description: "Lord Krishna possessed such charming effect on people of Vrindavan that his mere presence would mesmerize them and fill them with joy. The melody of his flute used to send Gopis of Vrindavan into a state of blissful trance. This Pattachitra painting captures the essence of the same. Painted in bright colours, this one is a great addition to your collection.Note: In all its grandeur this can be custom made i.e., handcrafted exclusively for you in a size of your choice to suit your needs."
-            },
-            paint6: {
-                title: "Jagannath: The Master of the Universe",
-                price: 1200,
-                image: "https://www.artisanscrest.in/cdn/shop/products/acbpspljop-84_grande.jpg?v=1488436881",
-                description: "In Sanskrit, Jagannatha translates to He who is the shelter of the moving World. Immortalized as the protector and lord of the living world, Jagannatha is the divine Lord of the world and everything in it. Known to work in tandem with his brother Balabhadra and his sister Subhadra, Jagannatha is the embodiment of protection and care for all living beings, and the master of the Universe and all beings within. Created over a piece of cloth or a dried palm leaf, the Pattachitra art form dates back to 5 BC and is a hallmark of Raghurajpur, a heritage crafts village in the Puri district of Odisha. A unique addition to your home, this beautiful work of art makes a perfect addition to your living room or den."
-            },
+      // Header
+      doc.setFontSize(18);
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(124, 79, 32);
+      doc.text("CraftCart - Order Invoice", 20, 20);
+
+      // Date 
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(80, 80, 80);
+      doc.text(`Date: ${currentDate}`, 200, 20, { align: "right" });
+
+      // Line separator
+      doc.setDrawColor(124, 79, 32);
+      doc.setLineWidth(0.5);
+      doc.line(10, 25, 200, 25);
+
+      // Customer Details
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(124, 79, 32);
+      doc.text("Customer Details", 20, 35);
+
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(0, 0, 0);
+      doc.text(`Name : ${name}`, 20, 45);
+      doc.text(`Phone : ${phone}`, 20, 52);
+      doc.text(`Address : ${address}`, 20, 59);
+
+      // Light background box
+      doc.setFillColor(255, 245, 230);
+      doc.setDrawColor(124, 79, 32);
+      doc.rect(15, 70, 180, 55, "FD"); // Fill + border (first)
+
+      // Heading
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(124, 79, 32);
+      doc.text("Order Summary", 20, 75);
+
+      // Order Details
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(0, 0, 0);
+      doc.text(`Product: Abhedabhava Radha Krishna`, 20, 85);
+      doc.text(`Quantity : ${quantity}`, 20, 92);
+      doc.text(`Price per Item : Rs. ${pricePerItem}`, 20, 99);
+      doc.text(`Total Amount : Rs. ${total}`, 20, 106);
+      doc.text(`Payment Method : ${paymentMethod === "upi" ? "UPI" : "Cash on Delivery"}`, 20, 113);
 
 
-            //TRIBAL DETAILS
-            tribal1: {
-                title: "Aaratrika: A Lamp",
-                price: 599,
-                image: "https://www.artisanscrest.in/cdn/shop/products/IMG_6935_grande.jpg?v=1518498766",
-                description: "Mirror stands, metal stands, glass holders..there are many ways to light a candle and put it on a pedestal, but none quite like using a natural medium like bamboo. This candle stand comes with a top cover to regulate the flame and is safe to use with fire. Bring it home to your prayer room, or place it outside the door on a cool evening to add that much-needed warmth."
-            },
-            tribal2: {
-                title: "Bhringaraka: A Flower Holder",
-                price: 999,
-                image: "https://www.artisanscrest.in/cdn/shop/products/IMG_6931_grande.jpg?v=1518498479",
-                description: "Flower vases are a great way to spice up the interiors of your house or office. They create an interesting aesthetic appeal as well as offer a sense of welcome and serenity. An all-natural flower vase can only act as an addition to all the beauty of your home. This tall flower vase with a geometric cut and intricately carved floral patterns is one such priceless artifact. Best spots to place it are beside a sofa or a T.V table or in one of the corners of the room. "
-            },
-            tribal3: {
-                title: "Dedeepya: Source Of Eternal Light",
-                price: 1250,
-                image: "https://www.artisanscrest.in/cdn/shop/products/IMG_6927_grande.jpg?v=1518498248",
-                description: "This lampshade made out of bamboo strips is a fine example of craftsmanship with all the patterns created and colours used. All it needs is a source of light to begin enchanting you with its presence. Using a traditional art method with a touch of modernity, this tall lampshade with two smaller ones beside it reminds one of the power art has in evoking emotions. Natural and enchanting, bedside tables or study tables are an ideal spot for this artifact."
-            },
-            tribal4: {
-                title: "Mandiram: A Place Of Worship",
-                price: 2999,
-                image: "https://www.artisanscrest.in/cdn/shop/products/IMG_6932_grande.jpg?v=1518498532",
-                description: "This artifact made entirely out of bamboo is one of the finest pieces of artwork by our artisans. It depicts a temple with an idol of Lord Jagannath and a gopuram with a flag on top. The artisan's eye for intricate detail can be noticed in the detailing done on the garlands and flowers, as well as the layers in the Gopuram. Place this in your puja-mandir to add some creativity to divinity. "
-            },
-            tribal5: {
-                title: "Pushpakarandaka: The Flower Basket",
-                price: 750,
-                image: "https://www.artisanscrest.in/cdn/shop/products/IMG_6920_grande.jpg?v=1518497977",
-                description: "Ladies of the bygone era are often depicted carrying a basket to collect flowers from the gardens or even forests. Flowers and women both represent tenderness. Such depictions often convey a sense of connection with nature. This flower basket made out of bamboo takes inspiration from that era with all its intricately and beautifully carved flowers. A fine piece of craftsmanship, this is a must-have for all nature lovers. "
-            },
-            tribal6: {
-                title: "Naudhwaja: A Boat with a Flag",
-                price: 750,
-                image: "https://www.artisanscrest.in/cdn/shop/products/IMG_6921_grande.jpg?v=1518497924",
-                description: "Bamboo is an excellent substitute for wood, light in weight, durable and retaining its natural charm. It is a long grass with a thick stem and is one of the fastest growing plants on earth. The craftability of Bamboo has made it one of the materials chosen for creating artifacts such as this one. This boat with a flag is a model made using bamboo and can be used as a decorative piece in your home to subtly represent your love for travel."
-            },
+      // Footer
+      doc.setFontSize(11);
+      doc.setFont("helvetica", "italic");
+      doc.setTextColor(124, 79, 32);
+      doc.text("Thank you for shopping with CraftCart!", 105, 140, { align: "center" });
+
+      // Save
+      doc.save("invoice.pdf");
 
 
-            //HANDLOOM DETAILS
-            handloom1: {
-                title: "Handloom - Tussar Silk and Cotton Shawl",
-                price: 1250,
-                image: "https://www.artisanscrest.in/cdn/shop/products/acgptcshbg-68_grande.jpg?v=1487681646",
-                description: "Intricate handlooms and finely woven garments are hallmarks of rural Indian craftsmen. The attention to detail and work that goes into every piece makes these handloom products exquisite masterpieces in their own right and makes them treasured by fashion connoisseurs from across the world. This handwoven shawl, made up of Tussar Silk and cotton is characterized by the intricate embroidery and the contrasting colour patterns. The exquisitely woven, vibrant purple patterns perfectly stand out on the regal, grey background and combine to create a garment which is stylish, fashionable and is a testimony to the talent and skills of a group of artisans striving to keep alive an art form which has endured for centuries."
-            },
-            handloom2: {
-                title: "Handlooms - Tussar Silk stole",
-                price: 2250,
-                image: "https://www.artisanscrest.in/cdn/shop/products/acgptcstgc-81_grande.jpg?v=1487682157",
-                description: "Indian handloom creations are in great demand among fashion connoisseurs across the world for their bright and vibrant colours, their intricate embroidery and the handcrafted skill of the master weavers of rural India. This exquisite stole is a testimony to the skills and talent of the rural craftsmen who work magic with Tussar silk to create this masterpiece in cloth. The light and elegant stole is characterized by the bright orange base with red motifs along the hemlines, while the checked pattern creates a contrast in colours. The stole is designed to create an aesthetically pleasing visual while being comfortable enough to wear across all weather conditions. Add a touch of Indian tradition and culture to your wardrobe and own a piece of craftsmanship which has endured for centuries."
-            },
-            handloom3: {
-                title: "Handloom - Tussar Silk and Cotton Shawl",
-                price: 1250,
-                image: "https://www.artisanscrest.in/cdn/shop/products/acgptcshby-79_grande.jpg?v=1487682057",
-                description: "While the rural artisans of India are famed for making exquisite sculptures and paintings, traditional handlooms also occupy a special place in the homes of fashion and art lovers across the world. This intricately handwoven shawl, made of tussar silk and cotton is an exuisite masterpiece, a tribute to the handloom artisans of North and East India. This regal garment is characterized by the subtle, yet rich colours and stark contrasts, creating an eye-catching garment. The golden patterns perfectly contrast with the rich, black background to create a stylish, elegant and regal garment, perfect for gifting or pairing with your ethnic ensemble."
-            },
-            handloom4: {
-                title: "Handloom - Tussar Silk and Cotton Shawl",
-                price: 1250,
-                image: "https://www.artisanscrest.in/cdn/shop/products/acgptcshgb-87_grande.jpg?v=1487681961",
-                description: "The handloom industry of India is world famous and renowned by fashion connoisseurs everywhere for its intricate work, vibrant patterns and vivid designs and patterns which make each garment a veritable masterpiece in cloth. This intricately handwoven shawl, made of tussar silk and cotton is a testimony to the skills of the expert weavers of rural India. The elgant colours perfectly contrast with one another to create a subtle yet stylish masterpiece made out of tussar silk and cotton. This exquisite handloom product is durable, comfortable and stylish, with contrasting colours and adroitly woven patterns. The vibrant red patterns stand out sharply on the elegant and subtle grey background, combining to create a pleasing visual look and giving the garment a touch of class. Pair this regal shawl with an ethnic ensemble and add a touch of history, culture and a page out of the great Indian artistic tradition to your wardrobe."
-            },
-            handloom5: {
-                title: "Handloom- Tussar Silk and Cotton Shawl",
-                price: 3600,
-                image: "https://www.artisanscrest.in/cdn/shop/products/IMG_0457_grande.jpg?v=1594375654",
-                description: "Intricately woven patterns and bright colours are a hallmark of rural craftsmen of India who put in much attention to detail and love into each garment that they weave. This makes their works much loved and appreciated across the globe. Displayed here is a beautiful red and turquoise green Tussar silk stole that has a very lively feel to it while keeping the traditional look intact. It could be a great gift to your loved ones."
-            },
-            handloom6: {
-                title: "Handlooms - Tussar Silk stole",
-                price: 3300,
-                image: "https://www.artisanscrest.in/cdn/shop/products/acgptcstgp-83_grande.jpg?v=1487682284",
-                description: "Indian handloom creations are in great demand among fashion connoisseurs across the world for their bright and vibrant colours, their intricate embroidery and the handcrafted skill of the master weavers of rural India. This exquisite stole is a testimony to the skills and talent of the rural craftsmen who work magic with Tussar silk to create this masterpiece in cloth. The light and elegant stole is characterized by the vibrant orange, green and brown hues, perfectly complemented by the bright pink motifs along the borders of the garment. This stole has a pleasing visual appearance and is perfect to wear with a light coloured ethnic ensemble. The exquisite garment is made from light fabric, making it perfect to wear across all weather conditions and adds a touch of culture and artistic heritage to your wardrobe."
-            },
-        };
-        const params = new URLSearchParams(window.location.search);
-        const itemId = params.get('itemId');
-        const item = productData[itemId];
-
-        const container = document.getElementById("checkoutDetails");
-
-        if (item) {
-            container.innerHTML = `
-          <h2>Order Summary</h2>
-          <img src="${item.image}" alt="${item.title}" />
-          <h3>${item.title}</h3>
-          <div class="price">Rs. ${item.price.toLocaleString()}</div>
-          <p>${item.description.substring(0, 150)}...</p>
-          <button class="btn" onclick="proceedToPayment()">Proceed to Payment</button>
-        <button  onclick="goBack()" class="btn1">Back to Home</button>
-
-        `;
-        } else {
-            container.innerHTML = "<h2>Product not found.</h2>";
-        }
-
-        function proceedToPayment() {
-            const paymentFormHTML = `
-        <h2>Payment Details</h2>
-        <form id="paymentForm" onsubmit="submitPayment(event)">
-            <div class="form-group-inline">
-                <label for="fullName">Full Name</label>
-                <input type="text" id="fullName" required placeholder="Your Name" />
-            </div>
-
-            <div class="form-group-inline">
-            <label>Email</label>
-            <input type="email" required placeholder="your@example.com" />
-            </div>
-
-            <div class="form-group-inline">
-            <label>Phone Number</label>
-            <input type="tel" required placeholder="1234567890" />
-            </div>
-
-            <div class="form-group-inline">
-            <label>Address</label>
-            <textarea required placeholder="Delivery Address"></textarea>
-            </div>
-
-            <div class="form-group-inline">
-            <label>Payment Option</label>
-            <select required>
-                <option value="">Select</option>
-                <option value="upi">UPI</option>
-                <option value="card">Credit/Debit Card</option>
-                <option value="cod">Cash on Delivery</option>
-            </select>
-            </div>
-
-            <div style="margin: 20px 0;text-align: center;" class"style1">
-                <label>Scan UPI QR (if applicable)</label><br /><br/>
-                <img src="data:image/png;base64,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" width="200" alt="UPI QR Code"/>
-            </div>
-
-            <button type="submit" class="btn">Pay Now</button>
-            <button type="button" onclick="goBack()" class="btn1">Cancel</button>
-        </form>
-    `;
-
-            document.getElementById("checkoutDetails").innerHTML = paymentFormHTML;
-        }
-
-        function submitPayment(event) {
-            event.preventDefault();
-            alert("Payment Successful! Thank you for your order.");
-            window.location.href = "../../task.html"; // Replace with your order confirmation page if needed
-        }
-        function goBack() {
-            window.location.href = "../../task.html"; // change this to your homepage path
-        }
-    </script>
+      alert("Invoice downloaded. Order Confirmed ✅");
+    }
+  </script>
 
 </body>
 
