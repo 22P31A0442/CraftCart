@@ -8,7 +8,7 @@ const cartRoutes = require('./routes/cartroute');
 const Contact = require('./models/ContactModel');
 
 
-const MONGO_URI = "mongodb+srv://tanujamallipamu:0371X5wqzX3jr26F@cluster0.fhign.mongodb.net/CardCraft";
+const MONGO_URI = "mongodb+srv://22P31A0438:22P31A0438@cluster0.ddihcb4.mongodb.net/CraftCart";
 const PORT = 5000;
 
 
@@ -83,5 +83,7 @@ app.post('/api/contact', async (req, res) => {
     res.status(500).json({ message: "Server error while saving contact" });
   }
 });
+
+
 
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
