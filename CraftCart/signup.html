@@ -18,7 +18,7 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
-      const res = await fetch('http://localhost:5000/api/users/signup', {
+      const res = await fetch('https://craft-cart-backend-eapo4ejdo-lakshmi-sais-projects.vercel.app/api/users/signup', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ name, email, password })
