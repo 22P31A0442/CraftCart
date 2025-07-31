@@ -456,7 +456,7 @@
 
     async function fetchProducts() {
         try {
-            const response = await fetch("http://localhost:5000/api/products/");
+            const response = await fetch("https://craft-cart-backend-eapo4ejdo-lakshmi-sais-projects.vercel.app/api/products/");
 
             console.log("Response status:", response.status);
 
@@ -556,7 +556,7 @@
 
   async function loadUserProfile(email) {
     try {
-      const res = await fetch(`http://localhost:5000/api/users/profile/${email}`);
+      const res = await fetch(`https://craft-cart-backend-eapo4ejdo-lakshmi-sais-projects.vercel.app/api/users/profile/${email}`);
       const data = await res.json();
       if (res.ok) {
         currentUser = { name: data.name, email: data.email };
@@ -577,7 +577,7 @@
         const password = document.getElementById('loginPassword').value;
 
         try {
-          const res = await fetch('http://localhost:5000/api/users/login', {
+          const res = await fetch('https://craft-cart-backend-eapo4ejdo-lakshmi-sais-projects.vercel.app/api/users/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -607,7 +607,7 @@
         const password = document.getElementById('signupPassword').value;
 
         try {
-          const res = await fetch('http://localhost:5000/api/users/signup', {
+          const res = await fetch('https://craft-cart-backend-eapo4ejdo-lakshmi-sais-projects.vercel.app/api/users/signup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, email, password })
@@ -711,7 +711,7 @@ document.getElementById('authButton').addEventListener('click', () => {
             const data = { name, email, subject, message };
 
             try {
-                const res = await fetch("http://localhost:5000/api/contact", {
+                const res = await fetch("https://craft-cart-backend-eapo4ejdo-lakshmi-sais-projects.vercel.app/api/contact", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
