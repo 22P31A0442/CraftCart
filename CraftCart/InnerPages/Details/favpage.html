@@ -59,7 +59,7 @@
   <script>
   const userId = localStorage.getItem("userId");
 
-  fetch(`http://localhost:5000/api/favorites/${userId}`)
+  fetch(`https://craft-cart-backend-eapo4ejdo-lakshmi-sais-projects.vercel.app/api/favorites/${userId}`)
     .then(res => res.json())
     .then(data => {
       const favGrid = document.getElementById("favGrid");
