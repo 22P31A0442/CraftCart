@@ -13,7 +13,7 @@
       const payload = JSON.parse(atob(token.split('.')[1]));
       const userId = payload.id;
 
-      const res = await fetch(`https://craft-cart-backend-eapo4ejdo-lakshmi-sais-projects.vercel.app/api/users/profile/${userId}`);
+      const res = await fetch(`https://craftcartbackend.onrender.com/api/users/profile/${userId}`);
       const data = await res.json();
 
       if (data.name) {
