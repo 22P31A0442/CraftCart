@@ -383,7 +383,7 @@
           return;
         }
 
-        fetch("http://localhost:5000/api/favorites", {
+        fetch("https://craftcartbackend.onrender.com/api/favorites", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -406,7 +406,7 @@
           return;
         }
 
-        fetch(`http://localhost:5000/api/favorites/${userId}/${productId}`, {
+        fetch(`https://craftcartbackend.onrender.com/api/favorites/${userId}/${productId}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -436,7 +436,7 @@
           return;
         }
 
-        fetch("http://localhost:5000/api/cart", {
+        fetch("https://craftcartbackend.onrender.com/api/cart", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -458,7 +458,7 @@
           return;
         }
 
-        fetch(`http://localhost:5000/api/cart/${userId}/${productId}`, {
+        fetch(`https://craftcartbackend.onrender.com/api/cart/${userId}/${productId}`, {
   method: "DELETE",
 })
   .then((res) => res.json())
