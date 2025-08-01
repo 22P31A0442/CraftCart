@@ -402,7 +402,7 @@
         //   }),
         // })
 
-          fetch("https://craft-cart-backend-eapo4ejdo-lakshmi-sais-projects.vercel.app/api/favorites", {
+          fetch("https://craftcartbackend.onrender.com/api/favorites", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -434,12 +434,13 @@
       //     .catch((err) => console.error("❌ Remove error:", err));
       // }
 
-        fetch(`${process.env.REACT_APP_API_URL}/api/favorites/${userId}/${productId}`, {
+        fetch(`https://craftcartbackend.onrender.com/api/favorites/${userId}/${productId}`, {
   method: "DELETE",
 })
   .then((res) => res.json())
   .then((data) => console.log("❌ Removed from MongoDB:", data))
   .catch((err) => console.error("❌ Remove error:", err));
+
 
 
       function toggleCart(product, buttonElement) {
@@ -464,7 +465,7 @@
           return;
         }
 
-        fetch("https://craft-cart-backend-eapo4ejdo-lakshmi-sais-projects.vercel.app/api/cart", {
+        fetch("https://craftcartbackend.onrender.com/api/cart", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -494,7 +495,7 @@
 //   .catch((err) => console.error("❌ Remove error:", err));
 //       }
 
-        fetch(`https://craft-cart-backend-eapo4ejdo-lakshmi-sais-projects.vercel.app/api/cart/${userId}/${productId}`, {
+        fetch(`https://craftcartbackend.onrender.com/api/cart/${userId}/${productId}`, {
   method: "DELETE",
 })
   .then((res) => res.json())
