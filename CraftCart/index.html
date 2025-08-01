@@ -560,7 +560,9 @@
       const data = await res.json();
       if (res.ok) {
         currentUser = { name: data.name, email: data.email };
-        localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
+        // localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
+          const userId = localStorage.getItem("userId");
+
         updateUI();
       }
     } catch (err) {
