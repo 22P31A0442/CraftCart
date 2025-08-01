@@ -59,7 +59,7 @@
   <script>
   const userId = localStorage.getItem("userId");
 
-  fetch(`http://localhost:5000/api/cart/${userId}`)
+  fetch(`https://craftcartbackend.onrender.com/api/cart/${userId}`)
     .then(res => res.json())
     .then(data => {
       const favGrid = document.getElementById("favGrid");
